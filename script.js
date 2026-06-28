@@ -26,163 +26,10 @@ function initLuxuryInteractions() {
         });
     });
 
-    const bar = document.getElementById('main-booking-bar');
-    const dynamicBtn = document.getElementById('dynamic-book-btn');
-    const step1 = document.querySelector('.step-1');
-    const step2 = document.querySelector('.step-2');
-    
-    let bookingState = 0; 
-
-    function validateStep1() {
-        const ci = document.getElementById('checkin-input');
-        const co = document.getElementById('checkout-input');
-        if (ci && co && bookingState === 1) {
-            dynamicBtn.disabled = !(ci.value !== "" && co.value !== "");
-        }
-    }
-
-    function validateStep2() {
-        const name = document.getElementById('guest-name');
-        const phone = document.getElementById('guest-phone');
-        const phoneError = document.getElementById('phone-error');
-        
-        if (name && phone && bookingState === 2) {
-            const cleanPhone = phone.value.replace(/\D/g, ''); 
-            const isValidPhone = /^[6-9]\d{9}$/.test(cleanPhone);
-            
-            // SMART ERROR DISPLAY LOGIC
-            if (phoneError) {
-                // If it's valid, or if the box is completely empty, hide the error
-                if (isValidPhone || cleanPhone.length === 0) {
-                    phoneError.style.display = 'none';
-                } 
-                // If they typed a full 10 digits but it's an invalid Indian number, show error
-                else if (cleanPhone.length === 10 && !isValidPhone) {
-                    phoneError.style.display = 'block';
-                }
-            }
-
-            dynamicBtn.disabled = !(name.value.trim().length > 0 && isValidPhone);
-        }
-    }
-
-    if (dynamicBtn && bar) {
-        dynamicBtn.addEventListener('click', (e) => {
-            e.preventDefault(); e.stopPropagation();
-
-            if (bookingState === 0) {
-                bar.classList.remove('collapsed'); bar.classList.add('expanded');
-                step1.style.display = 'flex'; dynamicBtn.innerText = 'NEXT'; dynamicBtn.disabled = true;
-                bookingState = 1; validateStep1(); 
-            } 
-            else if (bookingState === 1) {
-                step1.style.display = 'none'; step2.style.display = 'flex';
-                dynamicBtn.innerText = 'MAKE RESERVATION'; dynamicBtn.disabled = true;
-                bookingState = 2; validateStep2();
-            } 
-            else if (bookingState === 2) {
-                const dest = document.getElementById('dest-select').value;
-                const checkIn = document.getElementById('checkin-input').value;
-                const checkOut = document.getElementById('checkout-input').value;
-                const guests = document.getElementById('guests-select').value;
-                const name = document.getElementById('guest-name').value;
-                const phone = "+91 " + document.getElementById('guest-phone').value;
-
-                let durationText = "";
-                if(checkIn && checkOut) {
-                    const ciDate = new Date(checkIn);
-                    const coDate = new Date(checkOut);
-                    if(!isNaN(ciDate) && !isNaN(coDate)) {
-                        const diffDays = Math.ceil((coDate - ciDate) / (1000 * 60 * 60 * 24));
-                        if(diffDays > 7) { durationText = `\nDuration: 7+ days (${diffDays} days)`; } 
-                        else if(diffDays > 0) { durationText = `\nDuration: ${diffDays} days`; }
-                    }
-                }
-
-                const email = dest === "The Samita Grand" ? "hotelsamitagrand@gmail.com" : "newsamitagrand@gmail.com";
-                const body = `Hello\n\nI want to book a stay at ${dest} for the following dates :\n${checkIn} to ${checkOut}${durationText}\n${guests}\n\nGuest Details:\nName: ${name}\nPhone: ${phone}\n\nPlease do let me know if the stay can be arranged.`;
-                
-                window.location.href = `mailto:${email}?subject=Booking Request for ${dest}&body=${encodeURIComponent(body)}`;
-                if(overlay) { overlay.classList.add('active'); setTimeout(() => { overlay.classList.remove('active'); }, 1500); }
-            }
-        });
-
-        const nameInput = document.getElementById('guest-name');
-        const phoneInput = document.getElementById('guest-phone');
-        if (nameInput) nameInput.addEventListener('input', validateStep2);
-        if (phoneInput) {
-            phoneInput.addEventListener('input', (e) => {
-                e.target.value = e.target.value.replace(/\D/g, '').slice(0,10); 
-                validateStep2();
-            });
-            // Show error if they click away from the box and haven't finished typing 10 digits
-            phoneInput.addEventListener('blur', (e) => {
-                const cleanPhone = e.target.value.replace(/\D/g, '');
-                const isValidPhone = /^[6-9]\d{9}$/.test(cleanPhone);
-                const phoneError = document.getElementById('phone-error');
-                if (cleanPhone.length > 0 && !isValidPhone && phoneError) {
-                    phoneError.style.display = 'block';
-                }
-            });
-        }
-    }
-
-    const genericBookButtons = document.querySelectorAll('.btn-gold-solid');
-    genericBookButtons.forEach(btn => {
-        if(btn.id === 'dynamic-book-btn' || btn.classList.contains('get-directions')) return;
-        btn.addEventListener('click', function(e) {
-            e.preventDefault(); e.stopPropagation(); 
-            if(overlay) overlay.classList.add('active', 'wipe-in');
-            setTimeout(() => { window.location.href = 'contact-booking.html'; }, 800);
-        });
-    });
-
     // ==========================================
-    // 2. DYNAMIC LINKED CALENDARS (14 DAY LIMIT)
+    // 2. DYNAMIC LINKED CALENDARS (REMOVED)
     // ==========================================
-    if (typeof flatpickr !== 'undefined') {
-        const checkinInput = document.getElementById('checkin-input');
-        const checkoutInput = document.getElementById('checkout-input');
-
-        const maxBookingDate = new Date();
-        maxBookingDate.setMonth(maxBookingDate.getMonth() + 6);
-
-        if (checkinInput && checkoutInput) {
-            const checkoutPicker = flatpickr(checkoutInput, { 
-                altInput: true, altFormat: "F j, Y", dateFormat: "Y-m-d", minDate: "today", disableMobile: "true", 
-                onChange: function() { if (typeof validateStep1 === 'function') validateStep1(); } 
-            });
-
-            flatpickr(checkinInput, {
-                altInput: true, altFormat: "F j, Y", dateFormat: "Y-m-d", minDate: "today", maxDate: maxBookingDate, disableMobile: "true",
-                onChange: function(selectedDates, dateStr, instance) {
-                    if (selectedDates.length > 0) {
-                        const nextDay = new Date(selectedDates[0]); 
-                        nextDay.setDate(nextDay.getDate() + 1);
-                        
-                        // Calculate exactly 14 days from check-in
-                        const maxStay = new Date(selectedDates[0]);
-                        maxStay.setDate(maxStay.getDate() + 14);
-
-                        // Set the dynamic limits on the checkout calendar
-                        checkoutPicker.set('minDate', nextDay);
-                        checkoutPicker.set('maxDate', maxStay);
-                        
-                        // Clear checkout if their old date violates the new 14-day limit
-                        if (checkoutPicker.selectedDates.length > 0) {
-                            const currentCheckOut = checkoutPicker.selectedDates[0];
-                            if (currentCheckOut <= selectedDates[0] || currentCheckOut > maxStay) { 
-                                checkoutPicker.clear(); 
-                            }
-                        }
-                    }
-                    if (typeof validateStep1 === 'function') validateStep1();
-                }
-            });
-        } else {
-            flatpickr("input[type=date]", { altInput: true, altFormat: "F j, Y", dateFormat: "Y-m-d", minDate: "today", disableMobile: "true" });
-        }
-    }
+    // Booking engine removed for portfolio site.
 
     const staggerElements = document.querySelectorAll('.stagger-text');
     staggerElements.forEach(el => {
@@ -419,3 +266,31 @@ function initCustomCursor() {
     }
     updateCursor();
 }
+// ==========================================
+// SMOOTH SCROLLING FOR ANCHOR LINKS
+// ==========================================
+// This makes the page scroll down smoothly when clicking any anchor link
+const smoothScrollLinks = document.querySelectorAll('a[href^="#"]');
+
+smoothScrollLinks.forEach(link => {
+    link.addEventListener('click', function(event) {
+        // Only prevent default if it has a valid target ID (not just "#")
+        if (this.getAttribute('href').length > 1) {
+            event.preventDefault();
+            const targetId = this.getAttribute('href').substring(1);
+            const targetElement = document.getElementById(targetId);
+            
+            if (targetElement) {
+                // Determine offset for fixed header (approx 80px)
+                const headerOffset = 80;
+                const elementPosition = targetElement.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth'
+                });
+            }
+        }
+    });
+});

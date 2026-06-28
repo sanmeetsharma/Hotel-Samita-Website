@@ -85,22 +85,27 @@ bookNowButtons.forEach(button => {
 // ==========================================
 // 5. SMOOTH SCROLLING FOR FOOTER LINKS
 // ==========================================
-// This makes the page scroll down smoothly when they click "Rooms" or "Find Us" in the footer
-const smoothScrollLinks = document.querySelectorAll('.footer-link');
+// This makes the page scroll down smoothly when clicking any anchor link
+const smoothScrollLinks = document.querySelectorAll('a[href^="#"]');
 
 smoothScrollLinks.forEach(link => {
     link.addEventListener('click', function(event) {
-        // Only prevent default if it's an anchor link on the same page (starts with #)
-        if (this.getAttribute('href').startsWith('#')) {
+        // Only prevent default if it has a valid target ID (not just "#")
+        if (this.getAttribute('href').length > 1) {
             event.preventDefault();
             const targetId = this.getAttribute('href').substring(1);
             const targetElement = document.getElementById(targetId);
             
             if (targetElement) {
+                // Determine offset for fixed header (approx 80px)
+                const headerOffset = 80;
+                const elementPosition = targetElement.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
                 window.scrollTo({
-                    top: targetElement.offsetTop,
+                    top: offsetPosition,
                     behavior: 'smooth'
-		  });
+                });
             }
         }
     });
