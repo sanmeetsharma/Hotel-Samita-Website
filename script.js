@@ -270,20 +270,23 @@ function initCustomCursor() {
 // SMOOTH SCROLLING FOR ANCHOR LINKS
 // ==========================================
 // This makes the page scroll down smoothly when clicking any anchor link
-const smoothScrollLinks = document.querySelectorAll('a[href^="#"]');
+const smoothScrollLinks = document.querySelectorAll('a[href*="#"]');
 
 smoothScrollLinks.forEach(link => {
     link.addEventListener('click', function(event) {
-        // Only prevent default if it has a valid target ID (not just "#")
-        if (this.getAttribute('href').length > 1) {
-            event.preventDefault();
-            const targetId = this.getAttribute('href').substring(1);
-            const targetElement = document.getElementById(targetId);
+        // Check if the link points to an anchor on the same page
+        const isSamePath = location.pathname.replace(/^\//, '') === this.pathname.replace(/^\//, '') || 
+                           (location.pathname === '/' && this.pathname === '/index.html') ||
+                           (location.pathname === '/index.html' && this.pathname === '/');
+        
+        if (isSamePath && location.hostname === this.hostname && this.hash) {
+            let target = document.querySelector(this.hash);
             
-            if (targetElement) {
+            if (target) {
+                event.preventDefault();
                 // Determine offset for fixed header (approx 80px)
                 const headerOffset = 80;
-                const elementPosition = targetElement.getBoundingClientRect().top;
+                const elementPosition = target.getBoundingClientRect().top;
                 const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
 
                 window.scrollTo({
