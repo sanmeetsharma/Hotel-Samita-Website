@@ -764,7 +764,7 @@ table.premium-table { width: 100%; min-width: 850px; border-collapse: collapse; 
     right: 30px;
     z-index: 9999;
     display: flex;
-    flex-direction: column-reverse;
+    flex-direction: column;
     align-items: center;
     gap: 15px;
 }
