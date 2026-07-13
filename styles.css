@@ -751,7 +751,18 @@ table.premium-table { width: 100%; min-width: 850px; border-collapse: collapse; 
     background: rgba(198,168,124,0.1);
 }
 @media (max-width: 768px) {
-    .cookie-banner { bottom: 10px; left: 10px; right: 10px; padding: 20px; }
+    .cookie-banner { 
+        top: 15px; 
+        bottom: auto; 
+        left: 10px; 
+        right: 10px; 
+        padding: 20px; 
+        transform: translateY(-150%);
+        z-index: 200000;
+    }
+    .cookie-banner.show {
+        transform: translateY(0);
+    }
     .cookie-buttons { flex-direction: column; }
     .cookie-btn { width: 100%; text-align: center; }
 }
