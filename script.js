@@ -372,3 +372,25 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+
+// ==========================================
+// FLOATING ACTION BUTTON LOGIC
+// ==========================================
+document.addEventListener('DOMContentLoaded', () => {
+    const fabMain = document.getElementById('fab-main');
+    const fabOptions = document.querySelector('.fab-options');
+    if (fabMain && fabOptions) {
+        fabMain.addEventListener('click', () => {
+            fabOptions.classList.toggle('open');
+            const msgIcon = fabMain.querySelector('.fab-icon-message');
+            const closeIcon = fabMain.querySelector('.fab-icon-close');
+            if (fabOptions.classList.contains('open')) {
+                msgIcon.style.display = 'none';
+                closeIcon.style.display = 'block';
+            } else {
+                msgIcon.style.display = 'block';
+                closeIcon.style.display = 'none';
+            }
+        });
+    }
+});

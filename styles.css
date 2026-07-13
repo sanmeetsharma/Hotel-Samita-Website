@@ -755,6 +755,73 @@ table.premium-table { width: 100%; min-width: 850px; border-collapse: collapse; 
     .cookie-btn { width: 100%; text-align: center; }
 }
 
+/* =========================================
+   FLOATING ACTION BUTTON
+========================================= */
+.fab-container {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    gap: 15px;
+}
+.fab-main {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: var(--gold);
+    color: var(--white);
+    border: none;
+    box-shadow: 0 4px 15px rgba(198, 168, 124, 0.4);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+.fab-main:hover {
+    transform: scale(1.05);
+    background: var(--gold-dark);
+}
+.fab-options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px);
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.fab-options.open {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+.fab-option {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: var(--white);
+    color: var(--darker);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+    text-decoration: none;
+}
+.fab-option:hover {
+    background: var(--gold);
+    color: var(--white);
+    transform: scale(1.1);
+}
+@media (max-width: 768px) {
+    .fab-container { bottom: 20px; right: 20px; }
+}
+
 @media (max-width: 768px) {
     .intro-welcome { font-size: 1rem; letter-spacing: 5px; }
     .intro-brand { font-size: 3.5rem; }
