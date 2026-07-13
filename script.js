@@ -297,3 +297,51 @@ smoothScrollLinks.forEach(link => {
         }
     });
 });
+
+// ==========================================
+// FAQ SECTION LOGIC
+// ==========================================
+const faqTabs = document.querySelectorAll('.faq-tab');
+const faqContents = document.querySelectorAll('.faq-tab-content');
+
+faqTabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+        // Remove active class from all tabs
+        faqTabs.forEach(t => t.classList.remove('active'));
+        // Add active class to clicked tab
+        tab.classList.add('active');
+        
+        // Hide all contents
+        faqContents.forEach(content => content.classList.remove('active'));
+        
+        // Show target content
+        const targetId = tab.getAttribute('data-target');
+        const targetContent = document.getElementById(targetId);
+        if (targetContent) {
+            targetContent.classList.add('active');
+        }
+    });
+});
+
+const faqQuestions = document.querySelectorAll('.faq-question');
+
+faqQuestions.forEach(question => {
+    question.addEventListener('click', () => {
+        // Close other accordions in the same tab
+        const currentTab = question.closest('.faq-tab-content');
+        if (currentTab) {
+            const otherQuestions = currentTab.querySelectorAll('.faq-question');
+            otherQuestions.forEach(q => {
+                if (q !== question && q.classList.contains('active')) {
+                    q.classList.remove('active');
+                    q.nextElementSibling.classList.remove('expanded');
+                }
+            });
+        }
+
+        // Toggle current accordion
+        question.classList.toggle('active');
+        const answer = question.nextElementSibling;
+        answer.classList.toggle('expanded');
+    });
+});
