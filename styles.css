@@ -449,7 +449,8 @@ table.premium-table { width: 100%; min-width: 850px; border-collapse: collapse; 
         position: absolute;
         font-size: 45px;
         color: var(--gold);
-        opacity: 0.8;
+        opacity: 0;
+        transition: opacity 0.3s ease;
         transform-origin: center;
         filter: drop-shadow(0 0 10px rgba(198, 168, 124, 0.4));
         line-height: 1;
@@ -847,3 +848,7 @@ table.premium-table { width: 100%; min-width: 850px; border-collapse: collapse; 
 .contact-links-inline a { display: inline-block; margin: 0; color: #aaa; transition: color 0.3s; }
 .contact-links-inline a:hover { color: var(--white); }
 .centered-socials { display: flex; justify-content: center; gap: 15px; }
+
+body.is-loading .cursor-snowflake { opacity: 0;
+        transition: opacity 0.3s ease; }
+body.is-loading .snowflake-inner { animation: rotateSnowflake 2s linear infinite; }
