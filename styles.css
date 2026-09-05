@@ -213,7 +213,7 @@ img { max-width: 100%; }
 .video-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 4; background: rgba(0,0,0,0.3); pointer-events: none; }
 
 .hero-content { position: relative; z-index: 10; text-align: center; color: #fff; pointer-events: none; }
-.hero-content h1 { color: var(--white) !important; text-shadow: 0 4px 15px rgba(0,0,0,0.6); font-size: 4.5rem; margin-bottom: 20px;}
+.hero-content h1 { color: var(--white) !important; text-shadow: 0 4px 15px rgba(0,0,0,0.6); font-size: 6rem; margin-bottom: 20px;}
 .hero-content h1, .hero-content .btn-gold { pointer-events: auto; }
 
 /* LUXURY PORTFOLIO LAYOUT */
@@ -364,7 +364,7 @@ table.premium-table { width: 100%; min-width: 850px; border-collapse: collapse; 
     
     /* 2. Layouts */
     .hero-section { height: auto !important; min-height: 80vh !important; padding: 40px 10px !important; flex-direction: column; justify-content: center; margin-top: 0 !important; }
-    .hero-content h1 { font-size: 2.2rem !important; line-height: 1.2; padding: 0; word-break: break-word; margin-top: 0; }
+    .hero-content h1 { font-size: 3.2rem !important; line-height: 1.2; padding: 0; word-break: break-word; margin-top: 0; }
     .page-content { margin-top: 0 !important; padding-top: 10px !important; }
     .page-header { height: auto !important; min-height: 40vh !important; padding: 40px 10px !important; }
     .page-content h1 { font-size: 2.2rem !important; line-height: 1.2; word-break: break-word; }
@@ -520,7 +520,7 @@ table.premium-table { width: 100%; min-width: 850px; border-collapse: collapse; 
 
 .intro-brand {
     font-family: 'Great Vibes', cursive;
-    font-size: 6rem;
+    font-size: 7.5rem;
     white-space: nowrap;
     
     /* Diamond texture gradient */
@@ -836,7 +836,7 @@ table.premium-table { width: 100%; min-width: 850px; border-collapse: collapse; 
 
 @media (max-width: 768px) {
     .intro-welcome { font-size: 1rem; letter-spacing: 5px; }
-    .intro-brand { font-size: 3.5rem; }
+    .intro-brand { font-size: 4.5rem; }
 }
 
 @media (max-width: 1024px) { .portfolio-grid { grid-template-columns: repeat(2, 1fr); } }
