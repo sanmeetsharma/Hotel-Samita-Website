@@ -394,3 +394,37 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+
+// ==========================================
+// SNOWFLAKE CURSOR LOADER
+// ==========================================
+const snowflake = document.createElement('div');
+snowflake.id = 'snowflake-loader';
+snowflake.innerHTML = '&#10052;';
+document.body.appendChild(snowflake);
+
+let isPageLoading = document.readyState !== 'complete';
+
+document.addEventListener('mousemove', (e) => {
+    snowflake.style.left = (e.clientX + 15) + 'px';
+    snowflake.style.top = (e.clientY + 15) + 'px';
+    
+    if (isPageLoading) {
+        snowflake.classList.add('active');
+    }
+});
+
+window.addEventListener('load', () => {
+    isPageLoading = false;
+    snowflake.classList.remove('active');
+});
+
+document.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', function() {
+        const href = this.getAttribute('href');
+        if (href && !href.startsWith('#') && !href.startsWith('mailto:') && !href.startsWith('tel:') && this.getAttribute('target') !== '_blank') {
+            isPageLoading = true;
+            snowflake.classList.add('active');
+        }
+    });
+});

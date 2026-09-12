@@ -842,6 +842,229 @@ table.premium-table { width: 100%; min-width: 850px; border-collapse: collapse; 
 
 @media (max-width: 1024px) { .portfolio-grid { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 768px) { .portfolio-grid { grid-template-columns: 1fr; } }
+@media (max-width: 768px) { .contact-links-inline { flex-direction: column; gap: 10px; align-items: center; } }
+
+/* =========================================
+   SNOWFLAKE CURSOR LOADER
+========================================= */
+#snowflake-loader {
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999999;
+    font-size: 26px;
+    color: #ffffff;
+    text-shadow: 0 0 12px var(--gold);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    transform: translate(-50%, -50%);
+    animation: spin-snowflake 2.5s linear infinite;
+    margin: 0;
+    padding: 0;
+}
+#snowflake-loader.active {
+    opacity: 1;
+    visibility: visible;
+}
+@keyframes spin-snowflake {
+    0% { transform: translate(-50%, -50%) rotate(0deg); }
+    100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+    transition: max-height 0.6s ease-in-out;
+}
+.faq-answer-inner {
+    padding: 0 30px 25px;
+    color: #555;
+    font-size: 0.95rem;
+    line-height: 1.7;
+    border-top: 1px solid rgba(0,0,0,0.03);
+    margin-top: -5px;
+    padding-top: 15px;
+}
+
+/* =========================================
+   COOKIE BANNER
+========================================= */
+.cookie-banner {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    right: 20px;
+    max-width: 600px;
+    background: var(--white);
+    padding: 25px 30px;
+    border-radius: 12px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    border-left: 4px solid var(--gold);
+    transform: translateY(150%);
+    transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.cookie-banner.show {
+    transform: translateY(0);
+}
+.cookie-content h4 {
+    margin-bottom: 8px;
+    font-family: var(--font-heading);
+    color: var(--darker);
+    font-size: 1.2rem;
+}
+.cookie-content p {
+    font-size: 0.9rem;
+    color: #666;
+    line-height: 1.5;
+    margin: 0;
+}
+.cookie-buttons {
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+}
+.cookie-btn {
+    padding: 10px 24px;
+    border-radius: 30px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 1px solid var(--gold);
+}
+.cookie-btn.accept {
+    background: var(--gold);
+    color: var(--white);
+}
+.cookie-btn.accept:hover {
+    background: var(--gold-dark);
+}
+.cookie-btn.decline {
+    background: transparent;
+    color: var(--darker);
+}
+.cookie-btn.decline:hover {
+    background: rgba(198,168,124,0.1);
+}
+@media (max-width: 768px) {
+    .cookie-banner { 
+        top: 15px; 
+        bottom: auto; 
+        left: 10px; 
+        right: 10px; 
+        padding: 20px; 
+        transform: translateY(-150%);
+        z-index: 200000;
+    }
+    .cookie-banner.show {
+        transform: translateY(0);
+    }
+    .cookie-buttons { flex-direction: column; }
+    .cookie-btn { width: 100%; text-align: center; }
+}
+
+/* =========================================
+   FLOATING ACTION BUTTON
+========================================= */
+.fab-container {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+.fab-main {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: var(--gold);
+    color: var(--white);
+    border: none;
+    box-shadow: 0 4px 15px rgba(198, 168, 124, 0.4);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+.fab-main:hover {
+    transform: scale(1.05);
+    background: var(--gold-dark);
+}
+.fab-options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px);
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.fab-options.open {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+.fab-option {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: var(--white);
+    color: var(--darker);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+    text-decoration: none;
+}
+.fab-option:hover {
+    background: var(--gold);
+    color: var(--white);
+    transform: scale(1.1);
+}
+@media (max-width: 768px) {
+    .fab-container { bottom: 20px; right: 20px; }
+}
+
+@media (max-width: 768px) {
+    .intro-welcome { font-size: 1rem; letter-spacing: 5px; }
+    .intro-brand { font-size: 4.5rem; }
+}
+
+@media (max-width: 1024px) { .portfolio-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 768px) { .portfolio-grid { grid-template-columns: 1fr; } }
+@media (max-width: 768px) { .contact-links-inline { flex-direction: column; gap: 10px; align-items: center; } }
+
+/* =========================================
+   SNOWFLAKE CURSOR LOADER
+========================================= */
+#snowflake-loader {
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999999;
+    font-size: 26px;
+    color: #ffffff;
+    text-shadow: 0 0 12px var(--gold);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    transform: translate(-50%, -50%);
+    animation: spin-snowflake 2.5s linear infinite;
+    margin: 0;
+    padding: 0;
+}
+#snowflake-loader.active {
+    opacity: 1;
+    visibility: visible;
+}
+@keyframes spin-snowflake {
+    0% { transform: translate(-50%, -50%) rotate(0deg); }
+    100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
 
 .node-bottom-contact { grid-column: 1 / span 3; grid-row: 2; text-align: center; border-top: 1px solid rgba(198,168,124,0.15); padding-top: 40px; margin-top: 20px; }
 .contact-links-inline { display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; margin-bottom: 20px; }
