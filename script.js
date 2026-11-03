@@ -1,430 +1,107 @@
-// ==========================================
-// 1. PAGE TRANSITION & DYNAMIC BOOKING ENGINE
-// ==========================================
-function initLuxuryInteractions() {
-    const overlay = document.getElementById('samita-wipe-transition');
-    
-    // REVEAL LOGIC (On Page Load)
-    if(overlay) {
-        // Note: 'active' and 'wipe-out' are now in HTML by default to prevent flashing
-        setTimeout(() => {
-            overlay.classList.remove('active', 'wipe-out');
-        }, 1500); 
-    }
-
-    const links = document.querySelectorAll('a[href]:not([href^="#"]):not([href^="mailto"]):not([href^="tel"]):not([target="_blank"])');
-    links.forEach(link => {
-        link.addEventListener('click', function(e) {
-            e.preventDefault();
-            const target = this.href;
-            if(overlay) {
-                overlay.classList.add('active', 'wipe-in');
+(() => {
+    'use strict';
+    function init() {
+        const reduced=matchMedia('(prefers-reduced-motion: reduce)');
+        const motionAllowed=()=>{try{const value=localStorage.getItem('samita-motion');if(value)return value==='on';}catch{/* Use system settings. */}return !reduced.matches;};
+        document.documentElement.classList.toggle('motion-opt-in',motionAllowed());
+        document.documentElement.classList.toggle('motion-disabled',!motionAllowed());
+        const behavior=()=>motionAllowed()?'smooth':'instant';
+        const overlay=document.getElementById('samita-wipe-transition');
+        let navigating=false;
+        function clearTransition(){navigating=false;overlay?.classList.remove('active','wipe-in','wipe-out');document.body.classList.remove('is-leaving');}
+        if(overlay){if(!motionAllowed())clearTransition();else setTimeout(clearTransition,750);}
+        window.addEventListener('pageshow',event=>{if(event.persisted)clearTransition();});
+        document.addEventListener('click',event=>{
+            const link=event.target.closest('a[href]');
+            if(!link||event.defaultPrevented||event.button!==0||event.metaKey||event.ctrlKey||event.shiftKey||event.altKey||link.hasAttribute('download')||(link.target&&link.target!=='_self')||link.hasAttribute('data-modal'))return;
+            const href=link.getAttribute('href');
+            if(!href||href==='#'||!/^https?:$/.test(link.protocol))return;
+            const normalized=path=>path.replace(/(?:index\.html)?\/?$/,'/');
+            const samePage=link.origin===location.origin&&normalized(link.pathname)===normalized(location.pathname);
+            if(samePage&&link.hash){
+                let target;try{target=document.getElementById(decodeURIComponent(link.hash.slice(1)));}catch{return;}
+                if(target){event.preventDefault();target.scrollIntoView({behavior:behavior(),block:'start'});history.replaceState(null,'',link.hash);}
+                return;
             }
-            
-            // Allow 800ms for sweepUpIn to lock
-            setTimeout(() => { window.location.href = target; }, 800);
+            if(link.origin!==location.origin||!overlay||!motionAllowed())return;
+            if(navigating){event.preventDefault();return;}
+            event.preventDefault();navigating=true;
+            overlay.style.setProperty('--transition-x',`${event.clientX||innerWidth/2}px`);
+            overlay.style.setProperty('--transition-y',`${event.clientY||innerHeight/2}px`);
+            overlay.classList.remove('wipe-out');overlay.classList.add('active','wipe-in');document.body.classList.add('is-leaving');
+            const destination=link.href;setTimeout(()=>location.assign(destination),550);
         });
-    });
-
-    // ==========================================
-    // 2. DYNAMIC LINKED CALENDARS (REMOVED)
-    // ==========================================
-    // Booking engine removed for portfolio site.
-
-    const staggerElements = document.querySelectorAll('.stagger-text');
-    staggerElements.forEach(el => {
-        if (el.classList.contains('stagger-initialized')) return;
-        const text = el.innerText; el.innerText = ''; 
-        text.split('').forEach((char, i) => {
-            const wrap = document.createElement('span'); wrap.className = 'char-wrap';
-            const charSpan = document.createElement('span'); charSpan.className = 'char';
-            charSpan.innerText = char === ' ' ? '\u00A0' : char; 
-            charSpan.setAttribute('data-char', char === ' ' ? '\u00A0' : char);
-            charSpan.style.setProperty('--char-index', i);
-            wrap.appendChild(charSpan); el.appendChild(wrap);
+        document.querySelectorAll('.stagger-text').forEach(element=>{
+            if(element.classList.contains('stagger-initialized'))return;
+            const text=element.textContent.trim();element.setAttribute('aria-label',text);element.textContent='';
+            [...text].forEach((character,index)=>{
+                const wrap=document.createElement('span'),char=document.createElement('span');
+                wrap.className='char-wrap';wrap.setAttribute('aria-hidden','true');char.className='char';
+                char.textContent=character===' '?'\u00a0':character;char.dataset.char=char.textContent;char.style.setProperty('--char-index',index);
+                wrap.append(char);element.append(wrap);
+            });element.classList.add('stagger-initialized');
         });
-        el.classList.add('stagger-initialized');
-    });
-
-    if (!document.getElementById('scroll-top-btn')) {
-        const scrollTopBtn = document.createElement('button');
-        scrollTopBtn.id = 'scroll-top-btn'; scrollTopBtn.innerHTML = '↑';
-        document.body.appendChild(scrollTopBtn);
-
-        scrollTopBtn.addEventListener('click', () => {
-            const scrollStep = -window.scrollY / (1500 / 15);
-            const scrollInterval = setInterval(() => {
-                if (window.scrollY !== 0) {
-                    window.scrollBy(0, scrollStep);
-                } else {
-                    clearInterval(scrollInterval);
-                }
-            }, 15);
+        document.body.classList.add('samita-interactions');
+        if(!document.getElementById('scroll-top-btn')){
+            const button=document.createElement('button');button.id='scroll-top-btn';button.type='button';button.setAttribute('aria-label','Back to top');button.textContent='↑';document.body.append(button);
+            button.addEventListener('click',()=>window.scrollTo({top:0,behavior:behavior()}));
+            const update=()=>button.classList.toggle('show',scrollY>500);window.addEventListener('scroll',update,{passive:true});update();
+        }
+        const tabs=[...document.querySelectorAll('.faq-tab')],panels=[...document.querySelectorAll('.faq-tab-content')];
+        tabs.forEach(tab=>{
+            tab.type='button';tab.setAttribute('aria-controls',tab.dataset.target);tab.setAttribute('aria-pressed',String(tab.classList.contains('active')));
+            tab.addEventListener('click',()=>{
+                tabs.forEach(item=>{const active=item===tab;item.classList.toggle('active',active);item.setAttribute('aria-pressed',String(active));});
+                panels.forEach(panel=>panel.classList.toggle('active',panel.id===tab.dataset.target));
+            });
         });
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 300) { scrollTopBtn.classList.add('show'); } 
-            else { scrollTopBtn.classList.remove('show'); }
-        });
-    }
-
-    // ==========================================
-    // 8. FOOTER ANIMATED NETWORK ENGINE
-    // ==========================================
-    const footerCanvas = document.getElementById('footer-network');
-    if (footerCanvas) {
-        const fctx = footerCanvas.getContext('2d');
-        let fParticles = [];
-        
-        function resizeFooter() {
-            footerCanvas.width = footerCanvas.parentElement.offsetWidth;
-            footerCanvas.height = footerCanvas.parentElement.offsetHeight;
-        }
-        window.addEventListener('resize', resizeFooter);
-        resizeFooter();
-
-        class FooterNode {
-            constructor() {
-                this.x = Math.random() * footerCanvas.width; this.y = Math.random() * footerCanvas.height;
-                this.vx = (Math.random() - 0.5) * 0.4; this.vy = (Math.random() - 0.5) * 0.4;
-                this.radius = Math.random() * 1.5 + 0.5;
-            }
-            update() {
-                this.x += this.vx; this.y += this.vy;
-                if(this.x < 0 || this.x > footerCanvas.width) this.vx *= -1;
-                if(this.y < 0 || this.y > footerCanvas.height) this.vy *= -1;
-            }
-            draw() {
-                fctx.beginPath(); fctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-                fctx.fillStyle = '#C6A87C'; fctx.fill();
-            }
-        }
-
-// Creates 80 particles on desktop, but only 30 on mobile!
-let particleCount = window.innerWidth < 900 ? 30 : 80;
-for(let i=0; i<particleCount; i++) fParticles.push(new FooterNode());
-
-        function animateFooter() {
-            fctx.clearRect(0, 0, footerCanvas.width, footerCanvas.height);
-            for(let i=0; i<fParticles.length; i++) {
-                fParticles[i].update(); fParticles[i].draw();
-                for(let j = i + 1; j < fParticles.length; j++) {
-                    const dx = fParticles[i].x - fParticles[j].x;
-                    const dy = fParticles[i].y - fParticles[j].y;
-                    const dist = Math.sqrt(dx*dx + dy*dy);
-                    
-                    if(dist < 120) {
-                        fctx.beginPath();
-                        fctx.strokeStyle = `rgba(198, 168, 124, ${1 - dist/120})`;
-                        fctx.lineWidth = 0.5;
-                        fctx.moveTo(fParticles[i].x, fParticles[i].y);
-                        fctx.lineTo(fParticles[j].x, fParticles[j].y);
-                        fctx.stroke();
-                    }
-                }
-            }
-            requestAnimationFrame(animateFooter);
-        }
-        animateFooter();
-    }
-    
-    // CUSTOM LUXURY CURSOR
-    if (typeof initCustomCursor === 'function') initCustomCursor();
-}
-
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initLuxuryInteractions);
-} else {
-    initLuxuryInteractions();
-}
-
-const modalTriggers = document.querySelectorAll('.room-card, [data-modal]');
-const closeButtons = document.querySelectorAll('.close-modal');
-const modals = document.querySelectorAll('.modal-overlay');
-
-modalTriggers.forEach(trigger => {
-    trigger.addEventListener('click', function(e) {
-        if(e.target.classList.contains('btn-book-now') || (e.target.tagName.toLowerCase() === 'a' && !e.target.hasAttribute('data-modal'))) return; 
-        
-        const modalId = this.getAttribute('data-modal') || e.target.getAttribute('data-modal');
-        if(!modalId) return;
-
-        const targetModal = document.getElementById(modalId);
-        if (targetModal) { targetModal.classList.add('active'); document.body.style.overflow = 'hidden'; }
-    });
-});
-
-closeButtons.forEach(btn => {
-    btn.addEventListener('click', function() {
-        this.closest('.modal-overlay').classList.remove('active'); document.body.style.overflow = 'auto'; 
-    });
-});
-
-modals.forEach(modal => {
-    modal.addEventListener('click', function(e) {
-        if (e.target === this) { this.classList.remove('active'); document.body.style.overflow = 'auto'; }
-    });
-});
-
-// ==========================================
-// 6. LANDO NORRIS LIQUID MASK ENGINE
-// ==========================================
-const hero = document.getElementById('home-hero');
-const layer = document.getElementById('reveal-layer');
-
-if (hero && layer) {
-    let targetX = window.innerWidth / 2;
-    let targetY = window.innerHeight / 2;
-    let currentX = targetX;
-    let currentY = targetY;
-    let targetSize = 0;
-    let currentSize = 0;
-    let idleTimer;
-
-    hero.addEventListener('mousemove', (e) => {
-        const rect = hero.getBoundingClientRect();
-        targetX = e.clientX - rect.left;
-        targetY = e.clientY - rect.top;
-
-        targetSize = 250; 
-        
-        clearTimeout(idleTimer);
-        
-        idleTimer = setTimeout(() => {
-            targetSize = 0;
-        }, 1000);
-    });
-
-    hero.addEventListener('mouseenter', () => { targetSize = 250; });
-    hero.addEventListener('mouseleave', () => { 
-        targetSize = 0; 
-        clearTimeout(idleTimer); 
-    });
-
-    function updateLiquid() {
-        currentX += (targetX - currentX) * 0.12;
-        currentY += (targetY - currentY) * 0.12;
-        
-        const velX = targetX - currentX;
-        const velY = targetY - currentY;
-        const speed = Math.sqrt(velX * velX + velY * velY);
-        
-        let dynamicTargetSize = targetSize;
-        if (targetSize > 0) {
-            dynamicTargetSize = targetSize + (speed * 1.2);
-            if (dynamicTargetSize > 400) dynamicTargetSize = 400; 
-        }
-        
-        currentSize += (dynamicTargetSize - currentSize) * 0.15;
-
-        layer.style.setProperty('--m-x', currentX + 'px');
-        layer.style.setProperty('--m-y', currentY + 'px');
-        layer.style.setProperty('--m-size', currentSize + 'px');
-        
-        requestAnimationFrame(updateLiquid);
-    }
-    updateLiquid();
-}
-
-// ==========================================
-// 9. CUSTOM LUXURY CURSOR ENGINE
-// ==========================================
-function initCustomCursor() {
-    if (window.innerWidth < 901) return;
-
-    const cursorContainer = document.createElement('div');
-    cursorContainer.className = 'luxury-cursor-container';
-    
-    const triangle = document.createElement('div');
-    triangle.className = 'cursor-triangle';
-    
-    const snowflake = document.createElement('div');
-    snowflake.className = 'cursor-snowflake';
-    snowflake.innerHTML = '<span class="snowflake-inner">❄</span>';
-    
-    cursorContainer.appendChild(triangle);
-    cursorContainer.appendChild(snowflake);
-    document.body.appendChild(cursorContainer);
-
-    let mouseX = -100, mouseY = -100;
-    let curX = -100, curY = -100;
-
-    window.addEventListener('mousemove', (e) => {
-        mouseX = e.clientX;
-        mouseY = e.clientY;
-    });
-
-    function updateCursor() {
-        // Instant position for the triangle
-        triangle.style.transform = `translate(${mouseX}px, ${mouseY}px) translate(-50%, -50%) rotate(-30deg)`;
-        
-        // Smooth lagging effect for the snowflake
-        curX += (mouseX - curX) * 0.12;
-        curY += (mouseY - curY) * 0.12;
-        snowflake.style.transform = `translate(${curX}px, ${curY}px)`;
-
-        requestAnimationFrame(updateCursor);
-    }
-    updateCursor();
-}
-// ==========================================
-// SMOOTH SCROLLING FOR ANCHOR LINKS
-// ==========================================
-// This makes the page scroll down smoothly when clicking any anchor link
-const smoothScrollLinks = document.querySelectorAll('a[href*="#"]');
-
-smoothScrollLinks.forEach(link => {
-    link.addEventListener('click', function(event) {
-        // Check if the link points to an anchor on the same page
-        const isSamePath = location.pathname.replace(/^\//, '') === this.pathname.replace(/^\//, '') || 
-                           (location.pathname === '/' && this.pathname === '/index.html') ||
-                           (location.pathname === '/index.html' && this.pathname === '/');
-        
-        if (isSamePath && location.hostname === this.hostname && this.hash) {
-            let target = document.querySelector(this.hash);
-            
-            if (target) {
-                event.preventDefault();
-                // Determine offset for fixed header (approx 80px)
-                const headerOffset = 80;
-                const elementPosition = target.getBoundingClientRect().top;
-                const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-
-                window.scrollTo({
-                    top: offsetPosition,
-                    behavior: 'smooth'
+        document.querySelectorAll('.faq-question').forEach((question,index)=>{
+            const answer=question.nextElementSibling;if(!answer)return;
+            question.type='button';answer.id||=`faq-answer-${index}`;question.setAttribute('aria-controls',answer.id);question.setAttribute('aria-expanded','false');answer.setAttribute('aria-hidden','true');
+            question.addEventListener('click',()=>{
+                const open=question.getAttribute('aria-expanded')!=='true';
+                question.closest('.faq-tab-content')?.querySelectorAll('.faq-question').forEach(item=>{
+                    const active=item===question&&open;item.classList.toggle('active',active);item.setAttribute('aria-expanded',String(active));item.nextElementSibling.classList.toggle('expanded',active);item.nextElementSibling.setAttribute('aria-hidden',String(!active));
                 });
-            }
-        }
-    });
-});
-
-// ==========================================
-// FAQ SECTION LOGIC
-// ==========================================
-const faqTabs = document.querySelectorAll('.faq-tab');
-const faqContents = document.querySelectorAll('.faq-tab-content');
-
-faqTabs.forEach(tab => {
-    tab.addEventListener('click', () => {
-        // Remove active class from all tabs
-        faqTabs.forEach(t => t.classList.remove('active'));
-        // Add active class to clicked tab
-        tab.classList.add('active');
-        
-        // Hide all contents
-        faqContents.forEach(content => content.classList.remove('active'));
-        
-        // Show target content
-        const targetId = tab.getAttribute('data-target');
-        const targetContent = document.getElementById(targetId);
-        if (targetContent) {
-            targetContent.classList.add('active');
-        }
-    });
-});
-
-const faqQuestions = document.querySelectorAll('.faq-question');
-
-faqQuestions.forEach(question => {
-    question.addEventListener('click', () => {
-        // Close other accordions in the same tab
-        const currentTab = question.closest('.faq-tab-content');
-        if (currentTab) {
-            const otherQuestions = currentTab.querySelectorAll('.faq-question');
-            otherQuestions.forEach(q => {
-                if (q !== question && q.classList.contains('active')) {
-                    q.classList.remove('active');
-                    q.nextElementSibling.classList.remove('expanded');
+            });
+        });
+        let returnFocus=null;
+        function closeModal(modal){modal?.classList.remove('active');modal?.setAttribute('aria-hidden','true');document.body.style.overflow='';returnFocus?.focus();}
+        document.querySelectorAll('[data-modal]').forEach(trigger=>trigger.addEventListener('click',event=>{
+            const modal=document.getElementById(trigger.dataset.modal);if(!modal)return;event.preventDefault();returnFocus=trigger;modal.classList.add('active');modal.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';modal.querySelector('.close-modal')?.focus();
+        }));
+        document.querySelectorAll('.modal-overlay').forEach(modal=>{
+            modal.setAttribute('role','dialog');modal.setAttribute('aria-modal','true');modal.setAttribute('aria-hidden','true');
+            const heading=modal.querySelector('h2');if(heading){heading.id||=`${modal.id}-title`;modal.setAttribute('aria-labelledby',heading.id);}
+            const close=modal.querySelector('.close-modal');close?.setAttribute('aria-label','Close room details');close?.addEventListener('click',()=>closeModal(modal));
+            modal.addEventListener('click',event=>{if(event.target===modal)closeModal(modal);});
+            modal.addEventListener('keydown',event=>{
+                if(event.key==='Escape')closeModal(modal);
+                if(event.key==='Tab'){
+                    const items=[...modal.querySelectorAll('button,a[href],input,select,textarea,[tabindex="0"]')];if(!items.length)return;
+                    if(event.shiftKey&&document.activeElement===items[0]){event.preventDefault();items.at(-1).focus();}
+                    else if(!event.shiftKey&&document.activeElement===items.at(-1)){event.preventDefault();items[0].focus();}
                 }
             });
-        }
-
-        // Toggle current accordion
-        question.classList.toggle('active');
-        const answer = question.nextElementSibling;
-        answer.classList.toggle('expanded');
-    });
-});
-
-// ==========================================
-// COOKIE BANNER LOGIC
-// ==========================================
-document.addEventListener('DOMContentLoaded', () => {
-    const cookieBanner = document.getElementById('cookie-banner');
-    const acceptBtn = document.getElementById('accept-cookies');
-    const declineBtn = document.getElementById('decline-cookies');
-
-    if (cookieBanner && acceptBtn && declineBtn) {
-        if (!localStorage.getItem('cookieConsent')) {
-            setTimeout(() => {
-                cookieBanner.classList.add('show');
-            }, 1500);
-        }
-
-        acceptBtn.addEventListener('click', () => {
-            localStorage.setItem('cookieConsent', 'accepted');
-            cookieBanner.classList.remove('show');
         });
-
-        declineBtn.addEventListener('click', () => {
-            localStorage.setItem('cookieConsent', 'declined');
-            cookieBanner.classList.remove('show');
-        });
-    }
-});
-
-// ==========================================
-// FLOATING ACTION BUTTON LOGIC
-// ==========================================
-document.addEventListener('DOMContentLoaded', () => {
-    const fabMain = document.getElementById('fab-main');
-    const fabOptions = document.querySelector('.fab-options');
-    if (fabMain && fabOptions) {
-        fabMain.addEventListener('click', () => {
-            fabOptions.classList.toggle('open');
-            const msgIcon = fabMain.querySelector('.fab-icon-message');
-            const closeIcon = fabMain.querySelector('.fab-icon-close');
-            if (fabOptions.classList.contains('open')) {
-                msgIcon.style.display = 'none';
-                closeIcon.style.display = 'block';
-            } else {
-                msgIcon.style.display = 'block';
-                closeIcon.style.display = 'none';
+        const banner=document.getElementById('cookie-banner'),accept=document.getElementById('accept-cookies'),decline=document.getElementById('decline-cookies');
+        if(banner&&accept&&decline){
+            let consent;try{consent=localStorage.getItem('cookieConsent');}catch{/* Private browsing can disable storage. */}
+            if(!consent)setTimeout(()=>banner.classList.add('show'),1600);
+            function choose(value){try{localStorage.setItem('cookieConsent',value);}catch{/* Dismiss even if storage is unavailable. */}banner.classList.remove('show');}
+            accept.addEventListener('click',()=>choose('accepted'));decline.addEventListener('click',()=>choose('declined'));
+        }
+        const fab=document.getElementById('fab-main'),fabOptions=document.querySelector('.fab-options');
+        if(fab&&fabOptions){
+            fab.type='button';fab.setAttribute('aria-label','Contact the hotel');fab.setAttribute('aria-expanded','false');fabOptions.id||='contact-options';fab.setAttribute('aria-controls',fabOptions.id);
+            const links=[...fabOptions.querySelectorAll('a')];links.forEach(link=>link.tabIndex=-1);
+            function setContact(open){
+                fabOptions.classList.toggle('open',open);fab.setAttribute('aria-expanded',String(open));links.forEach(link=>link.tabIndex=open?0:-1);
+                const message=fab.querySelector('.fab-icon-message'),close=fab.querySelector('.fab-icon-close');if(message)message.style.display=open?'none':'block';if(close)close.style.display=open?'block':'none';
             }
-        });
-    }
-});
-
-// ==========================================
-// SNOWFLAKE CURSOR LOADER
-// ==========================================
-const snowflake = document.createElement('div');
-snowflake.id = 'snowflake-loader';
-snowflake.innerHTML = '&#10052;';
-document.body.appendChild(snowflake);
-
-let isPageLoading = document.readyState !== 'complete';
-
-document.addEventListener('mousemove', (e) => {
-    snowflake.style.left = (e.clientX + 15) + 'px';
-    snowflake.style.top = (e.clientY + 15) + 'px';
-    
-    if (isPageLoading) {
-        snowflake.classList.add('active');
-    }
-});
-
-window.addEventListener('load', () => {
-    isPageLoading = false;
-    snowflake.classList.remove('active');
-});
-
-document.querySelectorAll('a').forEach(link => {
-    link.addEventListener('click', function() {
-        const href = this.getAttribute('href');
-        if (href && !href.startsWith('#') && !href.startsWith('mailto:') && !href.startsWith('tel:') && this.getAttribute('target') !== '_blank') {
-            isPageLoading = true;
-            snowflake.classList.add('active');
+            fab.addEventListener('click',()=>setContact(!fabOptions.classList.contains('open')));
+            document.addEventListener('keydown',event=>{if(event.key==='Escape'&&fabOptions.classList.contains('open')){setContact(false);fab.focus();}});
         }
-    });
-});
+    }
+    if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
+})();
