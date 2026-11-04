@@ -17,6 +17,7 @@
     let x = rect.width/2, y = rect.height/2, targetX = x, targetY = y, radius = 0;
     let px = -100, py = -100, cx = -100, cy = -100;
     let hovering = false, showNight = false, heroVisible = true;
+    let directPointer = null, touchReleaseTimer = 0;
     let frame = 0, previous = 0, scrollDirty = true;
     let pageHeight = document.documentElement.scrollHeight-innerHeight;
     const photos = new Set();
@@ -66,24 +67,50 @@
         if (again) requestFrame(); else previous=0;
     }
     function setScene(value) {
+        clearTouchReveal();
         showNight=value;
         dayButton.setAttribute('aria-pressed',String(!value));
         nightButton.setAttribute('aria-pressed',String(value));
-        hint.textContent=!motionEnabled ? 'A stay, from day to night' : value ? 'A different kind of mountain evening' : fine.matches ? 'Move to meet the night' : 'A stay, from day to night';
+        hint.textContent=!motionEnabled ? 'A stay, from day to night' : value ? 'A different kind of mountain evening' : fine.matches ? 'Move to meet the night' : 'Touch to reveal the night';
         if (!motionEnabled) hero.classList.remove('gpu-active');
         night.style.clipPath=!motionEnabled && value ? 'inset(0)' : 'circle(0 at 50% 50%)';
         requestFrame();
     }
-    hero.addEventListener('pointerenter',event=>{
-        if (event.pointerType==='touch'||!fine.matches||!motionEnabled) return;
-        rect=hero.getBoundingClientRect(); targetX=x=event.clientX-rect.left; targetY=y=event.clientY-rect.top;
+    const isDirectPointer=event=>event.pointerType==='touch'||event.pointerType==='pen';
+    function clearTouchReveal() {
+        if (directPointer===null && !touchReleaseTimer) return;
+        clearTimeout(touchReleaseTimer); touchReleaseTimer=0; directPointer=null;
+        hovering=false; requestFrame();
+    }
+    function moveReveal(event,first=false) {
+        rect=hero.getBoundingClientRect();
+        targetX=Math.max(0,Math.min(rect.width,event.clientX-rect.left));
+        targetY=Math.max(0,Math.min(rect.height,event.clientY-rect.top));
+        if(first){x=targetX;y=targetY;}
         hovering=true; requestFrame();
+    }
+    hero.addEventListener('pointerdown',event=>{
+        if(!isDirectPointer(event)||event.isPrimary===false||!motionEnabled||event.target.closest('a,button,input,select,textarea'))return;
+        clearTouchReveal(); directPointer=event.pointerId;
+        moveReveal(event,true);
+    },{passive:true});
+    hero.addEventListener('pointerenter',event=>{
+        if (isDirectPointer(event)||!fine.matches||!motionEnabled) return;
+        moveReveal(event,true);
     });
     hero.addEventListener('pointermove',event=>{
-        if (event.pointerType==='touch'||!fine.matches||!motionEnabled) return;
-        targetX=event.clientX-rect.left; targetY=event.clientY-rect.top; hovering=true; requestFrame();
+        if(!motionEnabled)return;
+        if(isDirectPointer(event)){if(event.pointerId!==directPointer)return;}
+        else if(!fine.matches)return;
+        moveReveal(event);
     },{passive:true});
-    hero.addEventListener('pointerleave',()=>{hovering=false;requestFrame();});
+    hero.addEventListener('pointerleave',event=>{if(!isDirectPointer(event)){hovering=false;requestFrame();}});
+    window.addEventListener('pointerup',event=>{
+        if(event.pointerId!==directPointer)return;
+        directPointer=null;
+        touchReleaseTimer=setTimeout(()=>{touchReleaseTimer=0;hovering=false;requestFrame();},1000);
+    },{passive:true});
+    window.addEventListener('pointercancel',event=>{if(event.pointerId===directPointer)clearTouchReveal();},{passive:true});
     dayButton.addEventListener('click',()=>setScene(false));
     nightButton.addEventListener('click',()=>setScene(true));
     document.addEventListener('pointermove',event=>{
@@ -94,7 +121,7 @@
         cursor.classList.toggle('is-link',Boolean(label)); cursorLabel.textContent=label||'';requestFrame();
     },{passive:true});
     document.addEventListener('pointerleave',()=>document.body.classList.remove('has-motion-cursor'));
-    window.addEventListener('blur',()=>document.body.classList.remove('has-motion-cursor'));
+    window.addEventListener('blur',()=>{document.body.classList.remove('has-motion-cursor');clearTouchReveal();});
 
     const reveals=[...document.querySelectorAll('[data-reveal]')];
     if ('IntersectionObserver' in window) {
@@ -123,12 +150,12 @@
         },{passive:true});
         photo.addEventListener('pointerleave',()=>{photo.style.setProperty('--tilt-x','0deg');photo.style.setProperty('--tilt-y','0deg');});
     });
-    window.addEventListener('scroll',()=>{rect=hero.getBoundingClientRect();scrollDirty=true;requestFrame();},{passive:true});
+    window.addEventListener('scroll',()=>{clearTouchReveal();rect=hero.getBoundingClientRect();scrollDirty=true;requestFrame();},{passive:true});
     function resize(){rect=hero.getBoundingClientRect();renderer.resize(rect.width,rect.height);pageHeight=document.documentElement.scrollHeight-innerHeight;scrollDirty=true;requestFrame();}
     if ('ResizeObserver' in window) new ResizeObserver(resize).observe(document.body);
     window.addEventListener('resize',resize,{passive:true});
     document.addEventListener('visibilitychange',()=>{
-        if(document.hidden){cancelAnimationFrame(frame);frame=0;previous=0;}else requestFrame();
+        if(document.hidden){clearTouchReveal();cancelAnimationFrame(frame);frame=0;previous=0;}else requestFrame();
     });
     function applyMotion(value,remember=false){
         motionEnabled=value;

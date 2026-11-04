@@ -59,7 +59,7 @@
 .menu-contact { display: flex; gap: 30px; font-size: 13px; flex-wrap: wrap; }
 
 /* Two photographic layers, one crisp SVG aperture. No feathered spotlight. */
-.mountain-hero { position: relative; isolation: isolate; min-height: 720px; height: 100svh; max-height: 1300px; overflow: hidden; color: var(--paper); background: #06316f; border-radius: 0 0 28px 28px; }
+.mountain-hero { position: relative; isolation: isolate; min-height: 720px; height: 100svh; max-height: 1300px; overflow: hidden; color: var(--paper); background: #06316f; border-radius: 0 0 28px 28px; touch-action: pan-y pinch-zoom; }
 .hero-photograph { position: absolute; inset: 0; background-size: cover; background-position: center 58%; transform: scale(1.04); will-change: transform; }
 .hero-photograph::after { display: none; }
 .hero-day { background-image: url('Background_daylight.png'); }
