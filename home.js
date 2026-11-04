@@ -9,7 +9,6 @@
     const motionButton=document.getElementById('motion-toggle');
     const fine = matchMedia('(hover: hover) and (pointer: fine)');
     const night = document.querySelector('.hero-night');
-    const aperture = document.getElementById('night-aperture');
     const cursor = document.querySelector('.motion-cursor');
     const cursorLabel = cursor.querySelector('span');
     const progress = document.querySelector('.scroll-progress');
@@ -25,23 +24,8 @@
     let pageHeight = document.documentElement.scrollHeight-innerHeight;
     const photos = new Set();
 
-    // A closed Catmull–Rom spline gives the reveal a real, gently moving edge.
-    function shape(r,time,stretch,direction) {
-        if (r < .1) return 'M0 0';
-        const points = [], count = 14;
-        for (let i=0;i<count;i++) {
-            const a = i/count*Math.PI*2;
-            const wave = 1+Math.sin(a*3+time*.65)*.065+Math.cos(a*5-time*.4)*.025;
-            const u = Math.cos(a)*r*wave*stretch, v = Math.sin(a)*r*wave/Math.sqrt(stretch);
-            points.push([x+u*Math.cos(direction)-v*Math.sin(direction),y+u*Math.sin(direction)+v*Math.cos(direction)]);
-        }
-        let d = `M${points[0][0].toFixed(2)},${points[0][1].toFixed(2)}`;
-        for (let i=0;i<count;i++) {
-            const a=points[(i+count-1)%count],b=points[i],c=points[(i+1)%count],e=points[(i+2)%count];
-            d += ` C${(b[0]+(c[0]-a[0])/6).toFixed(2)},${(b[1]+(c[1]-a[1])/6).toFixed(2)} ${(c[0]-(e[0]-b[0])/6).toFixed(2)},${(c[1]-(e[1]-b[1])/6).toFixed(2)} ${c[0].toFixed(2)},${c[1].toFixed(2)}`;
-        }
-        return d+' Z';
-    }
+    let direction = 0;
+    const renderer = window.createSamitaHeroRenderer?.({ host: hero, onReady: requestFrame, onFallback: requestFrame }) || {ready:false,resize(){}};
     function requestFrame() { if (!frame && !document.hidden) frame=requestAnimationFrame(tick); }
     function tick(time) {
         frame=0;
@@ -53,7 +37,17 @@
             x+=dx*follow; y+=dy*follow;
             const size=showNight ? Math.hypot(rect.width,rect.height)*1.25 : hovering ? Math.min(rect.width*.24,210)+Math.min(speed*.22,65) : 0;
             radius+=(size-radius)*(1-Math.exp(-9*dt));
-            aperture.setAttribute('d',shape(radius,time/1000,showNight?1:1+Math.min(speed/500,.24),Math.atan2(dy,dx)));
+            if (speed > 12) {
+                const desired = Math.atan2(dy,dx);
+                direction += Math.atan2(Math.sin(desired-direction),Math.cos(desired-direction)) * (1-Math.exp(-7*dt));
+            }
+            if (renderer.ready) {
+                renderer.render({x,y,radius,time:time/1000,stretch:showNight?1:1+Math.min(speed/700,.14),angle:direction});
+                hero.classList.add('gpu-active');
+            } else {
+                hero.classList.remove('gpu-active');
+                night.style.clipPath = 'circle('+radius.toFixed(2)+'px at '+x.toFixed(2)+'px '+y.toFixed(2)+'px)';
+            }
             again=(hovering&&!showNight)||Math.abs(size-radius)>.1||speed>.1;
         }
         if (fine.matches && motionEnabled) {
@@ -78,7 +72,8 @@
         dayButton.setAttribute('aria-pressed',String(!value));
         nightButton.setAttribute('aria-pressed',String(value));
         hint.textContent=!motionEnabled ? 'A stay, from day to night' : value ? 'A different kind of mountain evening' : fine.matches ? 'Move to meet the night' : 'A stay, from day to night';
-        night.style.clipPath=!motionEnabled ? value?'inset(0)':'circle(0 at 50% 50%)' : 'url(#mountain-night-clip)';
+        if (!motionEnabled) hero.classList.remove('gpu-active');
+        night.style.clipPath=!motionEnabled && value ? 'inset(0)' : 'circle(0 at 50% 50%)';
         requestFrame();
     }
     hero.addEventListener('pointerenter',event=>{
@@ -111,6 +106,10 @@
         reveals.forEach(element=>observer.observe(element));document.documentElement.classList.add('motion-ready');
     }
     if ('IntersectionObserver' in window) {
+        const valley = document.getElementById('the-valley');
+        if (valley) new IntersectionObserver(entries => {
+            valley.classList.toggle('is-in-view',entries[0].isIntersecting);
+        },{rootMargin:'100px'}).observe(valley);
         new IntersectionObserver(entries=>{heroVisible=entries[0].isIntersecting;if(heroVisible)requestFrame();}).observe(hero);
         const photoObserver=new IntersectionObserver(entries=>{
             entries.forEach(entry=>entry.isIntersecting?photos.add(entry.target):photos.delete(entry.target));scrollDirty=true;requestFrame();
@@ -127,7 +126,7 @@
         photo.addEventListener('pointerleave',()=>{photo.style.setProperty('--tilt-x','0deg');photo.style.setProperty('--tilt-y','0deg');});
     });
     window.addEventListener('scroll',()=>{rect=hero.getBoundingClientRect();scrollDirty=true;requestFrame();},{passive:true});
-    function resize(){rect=hero.getBoundingClientRect();pageHeight=document.documentElement.scrollHeight-innerHeight;scrollDirty=true;requestFrame();}
+    function resize(){rect=hero.getBoundingClientRect();renderer.resize(rect.width,rect.height);pageHeight=document.documentElement.scrollHeight-innerHeight;scrollDirty=true;requestFrame();}
     if ('ResizeObserver' in window) new ResizeObserver(resize).observe(document.body);
     window.addEventListener('resize',resize,{passive:true});
     document.addEventListener('visibilitychange',()=>{
@@ -143,26 +142,11 @@
         document.body.classList.remove('has-motion-cursor');
         if(remember){preference=value?'on':'off';try{localStorage.setItem('samita-motion',preference);}catch{/* The choice still applies for this visit. */}}
         setScene(showNight);
+        document.dispatchEvent(new Event('samita-motion-change'));
     }
     reduced.addEventListener('change',()=>{if(!preference)applyMotion(!reduced.matches);});
     motionButton.addEventListener('click',()=>applyMotion(!motionEnabled,true));
     fine.addEventListener('change',()=>{hovering=false;document.body.classList.remove('has-motion-cursor');setScene(showNight);});
     applyMotion(motionEnabled);
 
-    const menu=document.getElementById('samita-menu'),toggle=document.getElementById('menu-toggle'),close=document.getElementById('menu-close');
-    let oldOverflow='';
-    function setMenu(open){
-        if(open)oldOverflow=document.body.style.overflow;
-        menu.hidden=!open;toggle.setAttribute('aria-expanded',String(open));document.body.style.overflow=open?'hidden':oldOverflow;
-        (open?close:toggle).focus();
-    }
-    toggle.addEventListener('click',()=>setMenu(menu.hidden));close.addEventListener('click',()=>setMenu(false));
-    menu.addEventListener('click',event=>{if(event.target.closest('a'))setMenu(false);});
-    menu.addEventListener('keydown',event=>{
-        if(event.key==='Escape'){event.preventDefault();setMenu(false);}
-        if(event.key!=='Tab')return;
-        const items=[...menu.querySelectorAll('a,button')],first=items[0],last=items.at(-1);
-        if(event.shiftKey&&document.activeElement===first){event.preventDefault();last.focus();}
-        else if(!event.shiftKey&&document.activeElement===last){event.preventDefault();first.focus();}
-    });
 })();

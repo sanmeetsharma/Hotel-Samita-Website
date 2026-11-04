@@ -1,3 +1,15 @@
 {
-  "cleanUrls": true
+  "cleanUrls": true,
+  "redirects": [
+    {
+      "source": "/new-samita-grand",
+      "destination": "https://newsamita.com/",
+      "permanent": false
+    },
+    {
+      "source": "/new-samita-grand.html",
+      "destination": "https://newsamita.com/",
+      "permanent": false
+    }
+  ]
 }

@@ -1,10 +1,10 @@
 /* The Samita — a moving mountain journal. Homepage styles stay scoped. */
 .samita-home {
-    --paper: #f1f0e7;
-    --ink: #1e2b25;
-    --moss: #adb58c;
-    --sand: #d5bc88;
-    --line: rgba(30, 43, 37, .2);
+    --paper: #f8fafc;
+    --ink: #002667;
+    --moss: #ebba5b;
+    --sand: #e7ae43;
+    --line: rgba(0, 38, 103, .2);
     --ease: cubic-bezier(.22, 1, .36, 1);
     background: var(--paper);
     color: var(--ink);
@@ -17,7 +17,7 @@
 .samita-home a { color: inherit; }
 .samita-home button { font: inherit; }
 .samita-home :focus-visible { outline: 2px solid var(--sand); outline-offset: 6px; }
-.samita-home ::selection { color: var(--paper); background: #5b6b50; }
+.samita-home ::selection { color: var(--paper); background: #17457e; }
 .samita-home .eyebrow { font-size: 10px; font-weight: 600; line-height: 1.5; letter-spacing: .14em; text-transform: uppercase; }
 .samita-home .section-shell { width: min(1440px, 100%); margin-inline: auto; padding-inline: clamp(22px, 5.5vw, 100px); }
 .samita-home .serif { font-family: 'Playfair Display', Georgia, serif; font-weight: 400; font-style: italic; }
@@ -26,14 +26,14 @@
 .scroll-progress { position: fixed; inset: 0 0 auto; height: 3px; z-index: 10001; background: var(--sand); transform: scaleX(0); transform-origin: left; pointer-events: none; }
 
 /* Navigation belongs to the image, rather than a separate white strip. */
-.samita-nav { position: fixed; inset: 0 0 auto; z-index: 50; height: 105px; padding: 28px clamp(22px, 3vw, 54px); display: flex; justify-content: space-between; align-items: center; color: var(--paper); transition: background .4s, color .4s, border-radius .4s, height .4s; }
-.samita-nav.is-scrolled { top: 14px; left: 24px; right: 24px; height: 72px; padding: 12px 22px; background: rgba(241,240,231,.95); color: var(--ink); border: 1px solid var(--line); border-radius: 12px; backdrop-filter: blur(16px); }
+.samita-nav { position: fixed; inset: 0 0 auto; z-index: 50; height: 105px; padding: 28px clamp(22px, 3vw, 54px); border: 1px solid transparent; display: flex; justify-content: space-between; align-items: center; color: var(--paper); transition: background .4s, color .4s, border-color .4s, border-radius .45s var(--ease), height .45s var(--ease), padding .45s var(--ease), top .45s var(--ease), left .45s var(--ease), right .45s var(--ease); }
+.samita-nav.is-scrolled { top: 14px; left: 24px; right: 24px; height: 72px; padding: 12px 22px; background: rgba(248,250,252,.95); color: var(--ink); border: 1px solid var(--line); border-radius: 12px; backdrop-filter: blur(16px); }
 .samita-nav.is-scrolled .nav-location { display: none; }
 .samita-nav.is-scrolled .desktop-links { margin-left: auto; }
 .samita-nav.is-scrolled .menu-toggle { border-color: var(--line); }
 .samita-nav.is-scrolled .menu-toggle:hover { background: var(--ink); color: var(--paper); }
 .samita-brand { display: flex; align-items: center; gap: 12px; }
-.samita-brand img { width: 39px; height: 39px; border-radius: 50%; object-fit: cover; }
+.samita-brand img { width: 39px; height: 39px; border-radius: 0; object-fit: cover; }
 .brand-name { font-family: 'Playfair Display', Georgia, serif; font-size: 26px; letter-spacing: -.06em; line-height: 1; }
 .brand-name small { display: block; font-family: 'Inter', sans-serif; font-size: 7px; font-weight: 400; letter-spacing: .2em; text-transform: uppercase; margin-top: 7px; }
 .nav-location { margin-left: auto; margin-right: auto; padding-inline: 35px; opacity: .8; }
@@ -41,35 +41,33 @@
 .desktop-links a { font-size: 10px; font-weight: 500; text-transform: uppercase; letter-spacing: .08em; }
 .desktop-links a::after { content: ''; display: block; height: 1px; background: currentColor; transform: scaleX(0); transform-origin: left; transition: transform .45s var(--ease); }
 .desktop-links a:hover::after { transform: scaleX(1); }
-.menu-toggle { width: 46px; height: 46px; border: 1px solid rgba(241,240,231,.5); border-radius: 50%; background: transparent; color: inherit; display: grid; place-content: center; gap: 6px; cursor: pointer; transition: background .3s, color .3s; }
+.menu-toggle { width: 46px; height: 46px; border: 1px solid rgba(248,250,252,.5); border-radius: 50%; background: transparent; color: inherit; display: grid; place-content: center; gap: 6px; cursor: pointer; transition: background .3s, color .3s; }
 .menu-toggle span { display: block; width: 16px; height: 1px; background: currentColor; transition: transform .35s; }
 .menu-toggle:hover { background: var(--paper); color: var(--ink); }
 .menu-toggle[aria-expanded="true"] span:first-child { transform: translateY(3.5px) rotate(45deg); }
 .menu-toggle[aria-expanded="true"] span:last-child { transform: translateY(-3.5px) rotate(-45deg); }
 .samita-menu { position: fixed; inset: 0; z-index: 100000; background: var(--ink); color: var(--paper); padding: clamp(25px,5vw,80px); display: flex; flex-direction: column; justify-content: center; overflow-y: auto; }
 .samita-menu[hidden] { display: none; }
-.menu-close { position: absolute; right: clamp(25px,5vw,80px); top: 30px; border: 1px solid #6e786d; border-radius: 50%; background: transparent; color: inherit; width: 48px; height: 48px; cursor: pointer; font-size: 25px !important; }
+.menu-close { position: absolute; right: clamp(25px,5vw,80px); top: 30px; border: 1px solid #8da4c4; border-radius: 50%; background: transparent; color: inherit; width: 48px; height: 48px; cursor: pointer; font-size: 25px !important; }
 .menu-links { display: flex; flex-direction: column; margin-block: 30px; }
 .menu-links a { font-size: clamp(35px,6.5vw,94px); font-weight: 600; letter-spacing: -.065em; line-height: 1.2; transition: color .3s, transform .5s var(--ease); }
 .menu-links a span { display: inline-block; font-size: 10px; letter-spacing: 0; vertical-align: top; margin-top: 17px; width: 40px; color: var(--moss); }
 .menu-links a:hover { color: var(--sand); transform: translateX(12px); }
-.samita-menu:not([hidden]) { animation: menu-arrive .65s var(--ease) both; }
-.samita-menu:not([hidden]) .menu-links a { animation: menu-link-arrive .8s var(--ease) both; }
-.samita-menu:not([hidden]) .menu-links a:nth-child(2) { animation-delay: 50ms; }
-.samita-menu:not([hidden]) .menu-links a:nth-child(3) { animation-delay: 100ms; }
-.samita-menu:not([hidden]) .menu-links a:nth-child(4) { animation-delay: 150ms; }
-.samita-menu:not([hidden]) .menu-links a:nth-child(5) { animation-delay: 200ms; }
-@keyframes menu-arrive { from { clip-path: inset(0 0 100%); } to { clip-path: inset(0); } }
-@keyframes menu-link-arrive { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+.samita-menu { transform: translate3d(0,-100%,0); will-change: transform; }
+.samita-menu.is-open { transform: translate3d(0,0,0); }
+.samita-menu.is-closing { pointer-events: none; }
 .menu-contact { display: flex; gap: 30px; font-size: 13px; flex-wrap: wrap; }
 
 /* Two photographic layers, one crisp SVG aperture. No feathered spotlight. */
-.mountain-hero { position: relative; isolation: isolate; min-height: 720px; height: 100svh; max-height: 1300px; overflow: hidden; color: var(--paper); background: #4f685b; border-radius: 0 0 28px 28px; }
+.mountain-hero { position: relative; isolation: isolate; min-height: 720px; height: 100svh; max-height: 1300px; overflow: hidden; color: var(--paper); background: #06316f; border-radius: 0 0 28px 28px; }
 .hero-photograph { position: absolute; inset: 0; background-size: cover; background-position: center 58%; transform: scale(1.04); will-change: transform; }
-.hero-photograph::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg,rgba(8,24,18,.54),rgba(8,24,18,.05) 40%,rgba(8,24,18,.67)); }
+.hero-photograph::after { display: none; }
 .hero-day { background-image: url('Background_daylight.png'); }
 .hero-night { background-image: url('Background_nighttime.png'); z-index: 1; clip-path: circle(0 at 50% 50%); }
-.hero-night::after { background: linear-gradient(180deg,rgba(8,16,14,.25),rgba(8,16,14,.02) 40%,rgba(8,16,14,.5)); }
+.hero-lighting { position: absolute; inset: 0; z-index: 2; pointer-events: none; background: linear-gradient(180deg,rgba(0,23,68,.5),rgba(0,23,68,.04) 40%,rgba(0,23,68,.62)); }
+.hero-canvas { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; visibility: hidden; pointer-events: none; }
+.gpu-active .hero-canvas { visibility: visible; }
+.gpu-active .hero-photograph { visibility: hidden; }
 .hero-clip-defs { position: absolute; width: 0; height: 0; overflow: hidden; pointer-events: none; }
 .hero-grain { position: absolute; inset: 0; z-index: 2; pointer-events: none; opacity: .12; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Cpath filter='url(%23n)' opacity='.4' d='M0 0h180v180H0z'/%3E%3C/svg%3E"); }
 .hero-topline { position: absolute; z-index: 3; top: 145px; inset-inline: clamp(22px,3vw,54px); display: flex; justify-content: space-between; align-items: start; pointer-events: none; }
@@ -77,7 +75,7 @@
 .hero-location::before { content: ''; display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--sand); margin-right: 8px; }
 .hero-instruction { display: flex; align-items: center; gap: 12px; }
 .hero-tools { display: grid; justify-items: end; gap: 15px; }
-.motion-toggle { pointer-events: auto; color: inherit; background: transparent; border: 0; border-bottom: 1px solid rgba(241,240,231,.5); padding: 3px 0; min-height: 28px; font-size: 9px !important; letter-spacing: .05em; cursor: pointer; }
+.motion-toggle { pointer-events: auto; color: inherit; background: transparent; border: 0; border-bottom: 1px solid rgba(248,250,252,.5); padding: 3px 0; min-height: 28px; font-size: 9px !important; letter-spacing: .05em; cursor: pointer; }
 .aperture-icon { display: inline-block; width: 25px; height: 25px; border: 1px solid currentColor; border-radius: 42% 58% 63% 37%; animation: aperture-turn 12s linear infinite; }
 @keyframes aperture-turn { to { transform: rotate(360deg); } }
 .hero-heading { position: absolute; z-index: 3; left: clamp(22px,3vw,54px); bottom: 155px; width: calc(100% - 70px); pointer-events: none; }
@@ -91,7 +89,7 @@
 .hero-scroll { justify-self: center; display: flex; align-items: center; gap: 15px; font-size: 10px; letter-spacing: .09em; text-transform: uppercase; }
 .round-arrow { display: inline-grid; place-items: center; width: 45px; height: 45px; border: 1px solid currentColor; border-radius: 50%; font-size: 20px; transition: transform .45s var(--ease), background .3s; }
 a:hover .round-arrow { transform: rotate(-35deg); }
-.scene-switch { justify-self: end; display: flex; gap: 3px; padding: 5px; border-radius: 30px; border: 1px solid rgba(241,240,231,.4); background: rgba(20,35,27,.28); backdrop-filter: blur(12px); }
+.scene-switch { justify-self: end; display: flex; gap: 3px; padding: 5px; border-radius: 30px; border: 1px solid rgba(248,250,252,.4); background: rgba(0,30,80,.28); backdrop-filter: blur(12px); }
 .scene-switch button { padding: 10px 16px; border: 0; border-radius: 20px; color: var(--paper); background: transparent; font-size: 10px; white-space: nowrap; cursor: pointer; transition: background .35s, color .35s; }
 .scene-switch button[aria-pressed="true"] { color: var(--ink); background: var(--paper); }
 .scene-switch button span { margin-right: 7px; font-size: 13px; }
@@ -102,7 +100,7 @@ a:hover .round-arrow { transform: rotate(-35deg); }
 .samita-home .statement { font-size: clamp(44px,6.7vw,102px); font-weight: 500; letter-spacing: -.065em; line-height: 1.03; }
 .statement .serif { display: block; letter-spacing: -.06em; }
 .intro-aside { padding-bottom: 8px; }
-.intro-aside p { max-width: 310px; font-size: 15px; line-height: 1.8; color: #5b6459; margin-top: 25px; }
+.intro-aside p { max-width: 310px; font-size: 15px; line-height: 1.8; color: #53657d; margin-top: 25px; }
 .mountain-mark { width: 70px; height: 50px; margin-bottom: 30px; }
 .mountain-mark path { fill: none; stroke: currentColor; stroke-width: 1.3; }
 .text-link { display: inline-flex; align-items: center; gap: 28px; border-bottom: 1px solid currentColor; padding-block: 12px; font-size: 11px; font-weight: 500; letter-spacing: .04em; text-transform: uppercase; }
@@ -114,7 +112,7 @@ a:hover .round-arrow { transform: rotate(-35deg); }
 .marquee-group { display: flex; align-items: center; flex-shrink: 0; gap: 50px; padding-right: 50px; }
 .marquee-group span { font-size: clamp(50px,7.7vw,115px); letter-spacing: -.06em; font-weight: 500; line-height: 1.1; white-space: nowrap; }
 .marquee-group .outline { -webkit-text-stroke: 1px var(--ink); color: transparent; }
-.marquee-star { font-size: 55px !important; font-weight: 300 !important; color: #929b74; }
+.marquee-star { font-size: 55px !important; font-weight: 300 !important; color: #c9912d; }
 @keyframes mountain-march { to { transform: translateX(-50%); } }
 .mountain-marquee:hover .marquee-track { animation-play-state: paused; }
 
@@ -124,21 +122,21 @@ a:hover .round-arrow { transform: rotate(-35deg); }
 .section-top .eyebrow { margin-top: 12px; }
 .samita-home .section-title { font-size: clamp(47px,6.8vw,104px); font-weight: 500; line-height: 1; }
 .section-top .section-title { max-width: 750px; }
-.section-index { font-size: 11px; border: 1px solid var(--line); border-radius: 20px; padding: 8px 13px; margin-top: 10px; white-space: nowrap; }
+.section-index { display: inline-flex; align-items: center; gap: 7px; font-size: 11px; border: 1px solid var(--line); border-radius: 20px; padding: 8px 13px; margin-top: 10px; white-space: nowrap; }
 .stay-card { display: grid; grid-template-columns: minmax(0,1.5fr) minmax(0,1fr); gap: clamp(30px,6vw,100px); align-items: center; margin-top: 90px; }
 .stay-card:nth-of-type(even) { grid-template-columns: minmax(0,1fr) minmax(0,1.5fr); }
 .stay-card:nth-of-type(even) .stay-photo { order: 2; }
 .stay-card:nth-of-type(even) .stay-copy { padding-left: 5%; }
-.stay-photo { position: relative; aspect-ratio: 1.2; border-radius: 12px; overflow: hidden; background: #d5d8ca; transform: perspective(1200px) rotateX(var(--tilt-x,0deg)) rotateY(var(--tilt-y,0deg)); transition: transform .7s var(--ease); }
+.stay-photo { position: relative; aspect-ratio: 1.2; border-radius: 12px; overflow: hidden; background: #e3ebf6; transform: perspective(1200px) rotateX(var(--tilt-x,0deg)) rotateY(var(--tilt-y,0deg)); transition: transform .7s var(--ease); }
 .stay-photo img { width: 100%; height: 118%; object-fit: cover; display: block; position: absolute; left: 0; top: -9%; transform: translateY(var(--image-shift,0px)) scale(1.015); transition: scale 1.2s var(--ease); }
 .stay-photo:hover img { scale: 1.04; }
-.photo-label { position: absolute; z-index: 1; bottom: 20px; left: 20px; color: var(--paper); border: 1px solid rgba(255,255,255,.7); border-radius: 20px; padding: 7px 13px; font-size: 9px; text-transform: uppercase; letter-spacing: .1em; background: rgba(15,30,22,.3); backdrop-filter: blur(8px); }
+.photo-label { position: absolute; z-index: 1; bottom: 20px; left: 20px; color: var(--paper); border: 1px solid rgba(255,255,255,.7); border-radius: 20px; padding: 7px 13px; font-size: 9px; text-transform: uppercase; letter-spacing: .1em; background: rgba(0,30,80,.3); backdrop-filter: blur(8px); }
 .photo-open { position: absolute; z-index: 1; top: 20px; right: 20px; width: 43px; height: 43px; display: grid; place-items: center; border-radius: 50%; color: var(--ink); background: var(--paper); font-size: 25px; transition: transform .5s var(--ease); }
 .stay-photo:hover .photo-open { transform: rotate(45deg); }
 .stay-copy { padding-right: 8%; }
-.stay-number { font-size: 11px; color: #727d69; display: inline-block; border-top: 1px solid var(--line); padding-top: 12px; min-width: 100%; margin-bottom: 30px; }
+.stay-number { font-size: 11px; color: #62738e; display: inline-block; border-top: 1px solid var(--line); padding-top: 12px; min-width: 100%; margin-bottom: 30px; }
 .samita-home .stay-copy h3 { font-size: clamp(37px,4.1vw,66px); font-weight: 500; line-height: 1.03; margin-bottom: 25px; }
-.stay-copy p { color: #60695e; font-size: 14px; line-height: 1.85; max-width: 340px; }
+.stay-copy p { color: #53657d; font-size: 14px; line-height: 1.85; max-width: 340px; }
 .stay-details { display: flex; flex-wrap: wrap; gap: 8px; list-style: none; padding: 0; margin-top: 26px; }
 .stay-details li { font-size: 9px; border: 1px solid var(--line); padding: 6px 10px; border-radius: 20px; }
 .stay-copy .text-link { margin-top: 27px; }
@@ -149,8 +147,8 @@ a:hover .round-arrow { transform: rotate(-35deg); }
 .valley-lines path { fill: none; stroke: var(--paper); stroke-width: 1; }
 .valley-section .section-top { position: relative; z-index: 1; }
 .valley-section .section-title { font-size: clamp(70px,11vw,170px); }
-.valley-section .section-index { border-color: #52604f; }
-.valley-title-note { width: 225px; font-size: 13px; color: #b3bba8; padding-top: 20px; align-self: end; }
+.valley-section .section-index { border-color: #5576a5; }
+.valley-title-note { width: 225px; font-size: 13px; color: #c9d7ec; padding-top: 20px; align-self: end; }
 .valley-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 9%; align-items: start; padding: 0 6% 55px; }
 .field-note { position: relative; display: block; background: var(--paper); color: var(--ink) !important; padding: 12px 12px 0; transform: rotate(var(--postcard-angle,-3deg)); transition: transform .7s var(--ease); border-radius: 3px; }
 .field-note:nth-child(2) { margin-top: 120px; --postcard-angle: 4deg; }
@@ -159,31 +157,31 @@ a:hover .round-arrow { transform: rotate(-35deg); }
 .field-image img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s var(--ease); }
 .field-note:hover img { transform: scale(1.06); }
 .field-info { position: relative; padding: 23px 14px 30px; }
-.field-info .eyebrow { color: #69725e; font-size: 8px; }
+.field-info .eyebrow { color: #657793; font-size: 8px; }
 .samita-home .field-info h3 { font-family: 'Playfair Display', Georgia, serif; font-style: italic; font-size: clamp(39px,5vw,69px); font-weight: 400; margin-block: 8px 17px; }
 .field-info p { font-size: 12px; line-height: 1.8; max-width: 300px; padding-right: 25px; }
 .field-info .round-arrow { position: absolute; right: 14px; top: 25px; width: 32px; height: 32px; font-size: 16px; }
-.valley-footnote { text-align: center; font-size: 10px; color: #aeb7a1; letter-spacing: .08em; }
+.valley-footnote { text-align: center; font-size: 10px; color: #b8cbe7; letter-spacing: .08em; }
 .valley-footnote span { display: block; font-family: 'Playfair Display', Georgia, serif; font-style: italic; font-size: 26px; color: var(--sand); margin-bottom: 8px; letter-spacing: 0; }
 
 .coming-section { padding-block: 130px; }
 .coming-grid { display: grid; grid-template-columns: 1.1fr 1fr; align-items: center; gap: 10%; }
 .coming-heading .eyebrow { display: block; margin-bottom: 35px; }
-.coming-heading p { max-width: 370px; font-size: 14px; line-height: 1.8; color: #626b5d; margin-top: 30px; }
+.coming-heading p { max-width: 370px; font-size: 14px; line-height: 1.8; color: #53657d; margin-top: 30px; }
 .coming-list { border-top: 1px solid var(--line); }
 .coming-item { padding: 30px 0; border-bottom: 1px solid var(--line); }
-.coming-item .eyebrow { display: flex; align-items: center; gap: 8px; font-size: 8px; color: #6a745b; }
-.status-dot { width: 5px; height: 5px; background: #8c9866; border-radius: 50%; display: inline-block; }
+.coming-item .eyebrow { display: flex; align-items: center; gap: 8px; font-size: 8px; color: #5e6e86; }
+.status-dot { width: 5px; height: 5px; background: #c48d28; border-radius: 50%; display: inline-block; }
 .samita-home .coming-item h3 { font-size: clamp(24px,2.5vw,39px); margin-block: 15px; font-weight: 500; letter-spacing: -.045em; }
-.coming-item p { font-size: 12px; line-height: 1.8; color: #626b5d; max-width: 340px; }
+.coming-item p { font-size: 12px; line-height: 1.8; color: #53657d; max-width: 340px; }
 
 /* Keep the useful answers; give them room to breathe. */
-.samita-home .section-faq { background: #e7e9dc; padding: 90px 0 !important; border-radius: 28px 28px 0 0; }
+.samita-home .section-faq { background: #edf3fb; padding: 90px 0 !important; border-radius: 28px 28px 0 0; }
 .samita-home .section-faq .container { max-width: 1280px; padding-inline: clamp(22px,5.5vw,80px); }
 .samita-home .section-faq .section-heading h2 { font-size: clamp(38px,5.5vw,72px) !important; font-weight: 500 !important; color: var(--ink); line-height: 1.05; letter-spacing: -.06em; }
 .samita-home .section-faq .section-heading > span { font-size: 13px !important; margin-top: 22px; }
 .samita-home .faq-tabs-container { justify-content: start; gap: 7px; margin-top: 40px; margin-bottom: 25px; }
-.samita-home .faq-tab { background: transparent; border-color: #adb39d; border-radius: 20px; font-size: 10px; padding: 10px 16px; box-shadow: none; color: var(--ink); }
+.samita-home .faq-tab { background: transparent; border-color: #a9b9d1; border-radius: 20px; font-size: 10px; padding: 10px 16px; box-shadow: none; color: var(--ink); }
 .samita-home .faq-tab.active { background: var(--ink); border-color: var(--ink); color: var(--paper); }
 .samita-home .faq-content-container { max-width: none !important; }
 .samita-home .faq-accordion-item { border: 0; border-bottom: 1px solid var(--line); background: transparent; border-radius: 0; box-shadow: none; margin: 0; }
@@ -191,32 +189,25 @@ a:hover .round-arrow { transform: rotate(-35deg); }
 .samita-home .faq-question { font-size: 14px; font-weight: 400; padding: 25px 0; color: var(--ink); gap: 25px; line-height: 1.6; }
 .samita-home .faq-question:hover { background: transparent; }
 .samita-home .faq-question .chevron { font-size: 20px; }
-.samita-home .faq-answer-inner { padding: 0 45px 25px 0; border: 0; margin: 0; font-size: 13px; line-height: 1.8; color: #5f6959; max-width: 800px; }
-.samita-home .faq-answer:not(.expanded) > .faq-answer-inner { padding-block: 0; }
+.samita-home .faq-answer-inner { padding: 5px 45px 25px 0; border: 0; margin: 0; font-size: 13px; line-height: 1.8; color: #53657d; max-width: 800px; }
 .samita-home .faq-answer .btn-gold { color: var(--ink); border-color: var(--ink); border-radius: 20px; padding: 7px 18px; }
 
-/* A proper invitation at the end of the journey. */
-.samita-footer { position: relative; color: var(--paper); background: var(--ink); padding: 90px clamp(22px,5.5vw,100px) 24px; overflow: hidden; }
-.footer-invitation { display: flex; justify-content: space-between; align-items: end; gap: 40px; padding-bottom: 65px; border-bottom: 1px solid #4c5845; }
-.samita-home .footer-invitation h2 { font-size: clamp(50px,7.5vw,110px); font-weight: 500; line-height: 1; }
-.footer-invitation > a { font-size: 10px; text-transform: uppercase; letter-spacing: .05em; display: flex; align-items: center; gap: 25px; white-space: nowrap; padding-bottom: 8px; }
-.footer-invitation .round-arrow { background: var(--sand); color: var(--ink); border-color: var(--sand); width: 65px; height: 65px; font-size: 30px; }
-.footer-columns { display: grid; grid-template-columns: 1fr 1.05fr 1.35fr 1fr; gap: 40px; padding-top: 55px; }
-.footer-columns h3 { font-size: 10px; font-weight: 400; text-transform: uppercase; letter-spacing: .12em; color: #a3af94; margin-bottom: 22px; }
-.footer-columns a { display: block; font-size: 11px; line-height: 2.4; width: fit-content; transition: color .3s; }
-.footer-columns a:hover { color: var(--sand); }
-.footer-columns .footer-tagline { font-family: 'Playfair Display', Georgia, serif; font-size: 21px; line-height: 1.4; color: var(--sand); }
-.footer-brand { font-weight: 500; font-size: clamp(80px,17vw,280px); letter-spacing: -.075em; line-height: 1.2; margin: 65px 0 18px -.05em; white-space: nowrap; color: #c5cdb8; }
-.footer-base { border-top: 1px solid #4c5845; padding-top: 22px; display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; color: #a3af94; font-size: 9px; }
+/* The original footer layout, with the logo's navy and gold palette. */
+.samita-home .full-page-footer { color: var(--white); }
+.samita-home .full-page-footer h4 { color: var(--gold); letter-spacing: 3px; line-height: 1.7; }
+.samita-home .full-page-footer .footer-node a { color: #c2d1e8; }
+.samita-home .full-page-footer .footer-node a:hover { color: var(--white); }
+.samita-home .full-page-footer .designer-tagline { color: var(--gold); }
+.samita-home .full-page-footer .footer-bottom-copyright { color: #b4c7e4; }
 .samita-home #scroll-top-btn { background: var(--paper); color: var(--ink); box-shadow: none; border: 1px solid var(--line); width: 40px; height: 40px; font-size: 18px; left: 22px; bottom: 22px; }
 .samita-home .fab-main { width: 48px; height: 48px; background: var(--paper); color: var(--ink); border: 1px solid var(--line); box-shadow: none; }
 .samita-home .fab-container { bottom: 22px; right: 22px; opacity: 0; visibility: hidden; pointer-events: none; transition: opacity .3s; }
 .samita-home.past-hero .fab-container { opacity: 1; visibility: visible; pointer-events: auto; }
-.samita-home .cookie-banner { background: var(--paper); border-left: 0; border: 1px solid #c2c7b6; border-radius: 8px; padding: 20px; max-width: 440px; }
+.samita-home .cookie-banner { background: var(--paper); border-left: 0; border: 1px solid #b6c5da; border-radius: 8px; padding: 20px; max-width: 440px; }
 .samita-home .cookie-content h4 { font-size: 17px; margin-bottom: 10px; letter-spacing: -.02em; }
 .samita-home .cookie-content p { font-size: 11px; line-height: 1.7; }
 .samita-home .cookie-content a { color: var(--ink) !important; }
-.samita-home .cookie-btn { font-size: 10px; padding: 9px 18px; border-color: #879175; }
+.samita-home .cookie-btn { font-size: 10px; padding: 9px 18px; border-color: #879bb9; }
 .samita-home .cookie-btn.accept { background: var(--ink); color: var(--paper); }
 
 /* The default cursor stays available until a fine pointer actually moves. */
@@ -245,7 +236,6 @@ a:hover .round-arrow { transform: rotate(-35deg); }
     .section-top { margin-bottom: 45px; }
     .stay-copy { padding-right: 0; }
     .stay-card { gap: 35px; }
-    .footer-columns { grid-template-columns: 1fr 1fr; row-gap: 35px; }
 }
 @media (max-width: 720px) {
     .samita-nav { height: 90px; padding-block: 20px; }
@@ -307,15 +297,6 @@ a:hover .round-arrow { transform: rotate(-35deg); }
     .samita-home .faq-tab { padding: 8px 12px; font-size: 9px; }
     .samita-home .faq-question { font-size: 13px; padding-block: 20px; }
     .samita-home .faq-answer-inner { font-size: 12px; padding-right: 20px; }
-    .samita-footer { padding-top: 65px; }
-    .footer-invitation { display: block; padding-bottom: 40px; }
-    .footer-invitation > a { margin-top: 30px; width: fit-content; }
-    .footer-invitation .round-arrow { width: 45px; height: 45px; font-size: 23px; }
-    .footer-columns { gap: 35px 20px; padding-top: 40px; }
-    .footer-columns a { font-size: 10px; overflow-wrap: anywhere; }
-    .footer-columns .footer-tagline { font-size: 20px; }
-    .footer-brand { margin-top: 45px; font-size: 17vw; }
-    .footer-base { font-size: 8px; padding-bottom: 55px; }
     .samita-home .cookie-banner { left: 12px; right: 12px; top: auto; bottom: 12px; transform: translateY(150%); max-width: none; }
     .samita-home .cookie-banner.show { transform: translateY(0); }
     .samita-home .cookie-buttons { flex-direction: row; }
@@ -334,4 +315,18 @@ html.motion-disabled .samita-home.has-motion-cursor, html.motion-disabled .samit
     html:not(.motion-opt-in) .motion-ready .stay-card[data-reveal] .stay-photo { clip-path: none; }
     html:not(.motion-opt-in) .motion-cursor { display: none !important; }
     html:not(.motion-opt-in) .samita-home.has-motion-cursor, html:not(.motion-opt-in) .samita-home.has-motion-cursor * { cursor: auto !important; }
+}
+
+/* Variable font weights breathe slowly without moving the surrounding columns. */
+.valley-section .section-top > .eyebrow { flex: 0 0 175px; }
+.valley-section #valley-title { flex: 1; min-width: 0; contain: layout style; animation: valley-weight 12s ease-in-out infinite; }
+.valley-title-line { display: block; white-space: nowrap; }
+.valley-section #valley-title .serif { animation: valley-serif-weight 12s ease-in-out infinite; }
+.valley-section:not(.is-in-view) #valley-title, .valley-section:not(.is-in-view) #valley-title .serif { animation-play-state: paused; }
+.valley-title-note { flex: 0 0 200px; }
+@keyframes valley-weight { 0%,100% { font-weight: 300; } 50% { font-weight: 780; } }
+@keyframes valley-serif-weight { 0%,100% { font-weight: 400; } 50% { font-weight: 800; } }
+@media (min-width:721px) and (max-width:1000px) {
+    .valley-section .section-top { display: grid; grid-template-columns: minmax(0,1fr) 180px; }
+    .valley-section .section-top > .eyebrow { grid-column: 1 / -1; }
 }

@@ -1,35 +1,37 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
 
 /* =========================================
    LUXURY BASE & TYPOGRAPHY
 ========================================= */
 :root {
-    --gold: #C6A87C;
-    --gold-dark: #A88B60;
-    --dark: #111827;
-    --darker: #0f172a;
-    --cream: #f9f9f9;
+    --navy: #002667;
+    --navy-deep: #001d50;
+    --gold: #e7ae43;
+    --gold-dark: #9b6919;
+    --dark: #19375f;
+    --darker: #002667;
+    --cream: #f8fafc;
     --white: #ffffff;
-    --maroon: #032770; 
+    --maroon: #002667;
     --font-heading: 'Inter', sans-serif;
     --font-body: 'Inter', sans-serif;
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 /* FIXED: Smooth scrolling added for buttons! */
-html { scroll-behavior: smooth; background-color: var(--maroon); }
-body { 
-    background-color: var(--cream); 
-    background-image: linear-gradient(135deg, rgba(198, 168, 124, 0.05) 25%, transparent 25%), linear-gradient(225deg, rgba(198, 168, 124, 0.05) 25%, transparent 25%), linear-gradient(45deg, rgba(198, 168, 124, 0.05) 25%, transparent 25%), linear-gradient(315deg, rgba(198, 168, 124, 0.05) 25%, var(--cream) 25%); 
-    background-position: 10px 0, 10px 0, 0 0, 0 0; 
-    background-size: 20px 20px; 
+html { scrollbar-gutter: stable; scroll-behavior: smooth; background-color: var(--maroon); }
+body {
+    background-color: var(--cream);
+    background-image: linear-gradient(135deg, rgba(231,174,67, 0.05) 25%, transparent 25%), linear-gradient(225deg, rgba(231,174,67, 0.05) 25%, transparent 25%), linear-gradient(45deg, rgba(231,174,67, 0.05) 25%, transparent 25%), linear-gradient(315deg, rgba(231,174,67, 0.05) 25%, var(--cream) 25%);
+    background-position: 10px 0, 10px 0, 0 0, 0 0;
+    background-size: 20px 20px;
     background-repeat: repeat;
-    color: var(--dark); 
-    font-family: var(--font-body); 
-    line-height: 1.7; 
-    width: 100%; max-width: 100vw; overflow-x: hidden; 
-    padding: 0 !important; margin: 0 !important; 
+    color: var(--dark);
+    font-family: var(--font-body);
+    line-height: 1.7;
+    width: 100%; max-width: 100vw; overflow-x: hidden;
+    padding: 0 !important; margin: 0 !important;
 }
 h1, h2, h3, h4 { font-family: var(--font-heading); font-weight: 700; color: var(--darker); }
 a { text-decoration: none; transition: all 0.3s ease; }
@@ -71,7 +73,7 @@ img { max-width: 100%; }
 ========================================= */
 .samita-wipe-transition {
     position: fixed; inset: 0; z-index: 999999;
-    display: grid; place-items: center; background: #e7e9dc;
+    display: grid; place-items: center; background: #edf3fb;
     visibility: hidden; pointer-events: none;
     clip-path: circle(0 at var(--transition-x,50%) var(--transition-y,50%));
     contain: paint;
@@ -105,12 +107,12 @@ html.motion-disabled .char, html.motion-disabled .faq-answer { transition: none 
 /* =========================================
    FIXED: HEADER SITS AT TOP AND SCROLLS AWAY
 ========================================= */
-.luxury-nav { 
-    position: relative !important; 
-    top: 0 !important; left: 0 !important; width: 100%; 
-    display: flex; justify-content: space-between; align-items: center; 
-    padding: 25px 50px; z-index: 9999; 
-    background: var(--white) !important; 
+.luxury-nav {
+    position: relative !important;
+    top: 0 !important; left: 0 !important; width: 100%;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 25px 50px; z-index: 9999;
+    background: var(--white) !important;
     box-shadow: 0 4px 15px rgba(0,0,0,0.05) !important; transform: none !important;
 }
 .nav-links { flex: 1; display: flex; align-items: center; }
@@ -123,7 +125,7 @@ html.motion-disabled .char, html.motion-disabled .faq-answer { transition: none 
 .hero-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-size: cover; background-position: center bottom; }
 .base-bg { z-index: 1; }
 /* The Mask Layer */
-.reveal-layer { 
+.reveal-layer {
     position: absolute; top: 0; left: 0; width: 100%; height: 100%;
     z-index: 2; pointer-events: none;
     background-size: cover; background-position: center bottom;
@@ -200,7 +202,7 @@ html.motion-disabled .char, html.motion-disabled .faq-answer { transition: none 
 /* SUB PAGES */
 .page-header { height: 70vh; min-height: 500px; display: flex; align-items: center; justify-content: center; text-align: center; position: relative; color: #fff; background: #111; }
 .page-header-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-size: cover; background-position: center; z-index: 0; opacity: 0.6; }
-.page-content { position: relative; z-index: 3; padding: 100px 20px 0; } 
+.page-content { position: relative; z-index: 3; padding: 100px 20px 0; }
 .page-content h1 { font-size: 4rem; color: #fff; text-shadow: 0 4px 15px rgba(0,0,0,0.5); margin-bottom: 10px; word-break: break-word;}
 
 /* ROOM CARDS / PORTFOLIO MODALS */
@@ -225,7 +227,7 @@ table.premium-table { width: 100%; min-width: 850px; border-collapse: collapse; 
 .amenities-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; list-style: none; margin-top: 30px; font-size: 1.1rem; color: #444; }
 
 /* BACKGROUNDS */
-.pattern-bg-light { background-color: var(--cream); background-image: linear-gradient(135deg, rgba(198, 168, 124, 0.05) 25%, transparent 25%), linear-gradient(225deg, rgba(198, 168, 124, 0.05) 25%, transparent 25%), linear-gradient(45deg, rgba(198, 168, 124, 0.05) 25%, transparent 25%), linear-gradient(315deg, rgba(198, 168, 124, 0.05) 25%, var(--cream) 25%); background-position: 10px 0, 10px 0, 0 0, 0 0; background-size: 20px 20px; background-repeat: repeat; }
+.pattern-bg-light { background-color: var(--cream); background-image: linear-gradient(135deg, rgba(231,174,67, 0.05) 25%, transparent 25%), linear-gradient(225deg, rgba(231,174,67, 0.05) 25%, transparent 25%), linear-gradient(45deg, rgba(231,174,67, 0.05) 25%, transparent 25%), linear-gradient(315deg, rgba(231,174,67, 0.05) 25%, var(--cream) 25%); background-position: 10px 0, 10px 0, 0 0, 0 0; background-size: 20px 20px; background-repeat: repeat; }
 .pattern-overlay-2 { padding: 100px 0; position: relative; background-color: var(--darker); overflow: hidden; }
 .pattern-overlay-2::before { content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0.15; background-image: repeating-radial-gradient( circle at 0 0, transparent 0, var(--darker) 15px, transparent 15px, var(--gold) 16px, transparent 16px, transparent 30px ); z-index: 1; }
 
@@ -254,11 +256,11 @@ table.premium-table { width: 100%; min-width: 850px; border-collapse: collapse; 
 .node-br { grid-column: 3; grid-row: 3; align-self: start; justify-self: start; text-align: left; }
 
 .footer-center-node { grid-column: 2; grid-row: 1; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; }
-.designer-tagline { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.6rem; color: var(--gold); letter-spacing: 2px; margin-top: 30px; text-shadow: 0 0 20px rgba(198,168,124,0.3); }
+.designer-tagline { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.6rem; color: var(--gold); letter-spacing: 2px; margin-top: 30px; text-shadow: 0 0 20px rgba(231,174,67,0.3); }
 
 .mini-socials { justify-content: flex-end; margin-top: 15px; }
 .footer-bottom-copyright { width: 100%; text-align: center; padding: 20px 0; margin-top: 40px; color: #666; font-size: 0.85rem; position: relative; z-index: 2; }
-.footer-bottom-copyright::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--gold) 0%, rgba(198,168,124,0.1) 50%, var(--gold) 100%); }
+.footer-bottom-copyright::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--gold) 0%, rgba(231,174,67,0.1) 50%, var(--gold) 100%); }
 
 /* =========================================
    THE MASTER MOBILE RESPONSIVENESS FIX
@@ -267,21 +269,21 @@ table.premium-table { width: 100%; min-width: 850px; border-collapse: collapse; 
     html, body { overflow-x: hidden !important; width: 100% !important; max-width: 100vw !important; margin: 0; padding: 0 !important; }
 
     /* 1. Header: Relative so it sits naturally at the top and scrolls OUT of view! */
-    .luxury-nav, .luxury-nav.scrolled { 
-        position: relative !important; 
-        top: 0 !important; left: 0 !important; 
-        width: 100vw !important; 
-        background: var(--white) !important; 
-        padding: 25px 15px !important; 
-        flex-direction: column; gap: 10px; 
-        z-index: 99999 !important; 
+    .luxury-nav, .luxury-nav.scrolled {
+        position: relative !important;
+        top: 0 !important; left: 0 !important;
+        width: 100vw !important;
+        background: var(--white) !important;
+        padding: 25px 15px !important;
+        flex-direction: column; gap: 10px;
+        z-index: 99999 !important;
         box-shadow: 0 4px 15px rgba(0,0,0,0.05) !important;
         box-sizing: border-box !important;
         transform: none !important;
     }
     .luxury-nav .nav-links { flex-wrap: wrap; justify-content: center; gap: 10px; width: 100%; }
     .luxury-nav .nav-links a { margin: 0 5px; font-size: 0.75rem; text-shadow: none; color: var(--darker) !important; }
-    
+
     /* 2. Layouts */
     .hero-section { height: auto !important; min-height: 80vh !important; padding: 40px 10px !important; flex-direction: column; justify-content: center; margin-top: 0 !important; }
     .hero-content h1 { font-size: 3.2rem !important; line-height: 1.2; padding: 0; word-break: break-word; margin-top: 0; }
@@ -323,7 +325,7 @@ table.premium-table { width: 100%; min-width: 850px; border-collapse: collapse; 
     .full-page-footer { padding: 40px 15px 0 !important; display: block !important; width: 100vw !important; box-sizing: border-box !important; }
     .footer-grid-container { display: flex !important; flex-direction: column !important; gap: 30px !important; text-align: center !important; width: 100% !important; padding: 0 !important; margin: 0 !important; }
     .footer-node { text-align: center !important; width: 100% !important; }
-    .footer-center-node { order: -1; margin-bottom: 10px !important; width: 100% !important; } 
+    .footer-center-node { order: -1; margin-bottom: 10px !important; width: 100% !important; }
     .designer-tagline { font-size: 1.1rem !important; margin-top: 15px !important; line-height: 1.4; word-break: break-word; white-space: normal !important; }
     .mini-socials { justify-content: center !important; }
 
@@ -359,7 +361,7 @@ table.premium-table { width: 100%; min-width: 850px; border-collapse: collapse; 
     box-shadow: 0 2px 8px rgba(0,0,0,0.02);
 }
 .faq-tab:hover {
-    background: rgba(198, 168, 124, 0.1);
+    background: rgba(231,174,67, 0.1);
 }
 .faq-tab.active {
     background: var(--gold);
@@ -412,10 +414,11 @@ table.premium-table { width: 100%; min-width: 850px; border-collapse: collapse; 
     transform: rotate(180deg);
 }
 
-.faq-answer { display: grid; grid-template-rows: 0fr; overflow: hidden; background: var(--white); transition: grid-template-rows .4s ease; }
-.faq-answer.expanded { grid-template-rows: 1fr; }
-.faq-answer-inner { min-height: 0; overflow: hidden; padding: 0 30px; color: #555; font-size: .95rem; line-height: 1.7; }
-.faq-answer.expanded > .faq-answer-inner { padding-top: 15px; padding-bottom: 25px; }
+.faq-answer { height: 0; overflow: hidden; background: var(--white); }
+.faq-answer.expanded { height: auto; }
+.faq-answer-inner { padding: 5px 30px 25px; color: #53657d; font-size: .95rem; line-height: 1.7; }
+.faq-answer.is-animating { will-change: height; }
+
 
 
 /* =========================================
@@ -480,15 +483,15 @@ table.premium-table { width: 100%; min-width: 850px; border-collapse: collapse; 
     color: var(--darker);
 }
 .cookie-btn.decline:hover {
-    background: rgba(198,168,124,0.1);
+    background: rgba(231,174,67,0.1);
 }
 @media (max-width: 768px) {
-    .cookie-banner { 
-        top: 15px; 
-        bottom: auto; 
-        left: 10px; 
-        right: 10px; 
-        padding: 20px; 
+    .cookie-banner {
+        top: 15px;
+        bottom: auto;
+        left: 10px;
+        right: 10px;
+        padding: 20px;
         transform: translateY(-150%);
         z-index: 200000;
     }
@@ -519,7 +522,7 @@ table.premium-table { width: 100%; min-width: 850px; border-collapse: collapse; 
     background: var(--gold);
     color: var(--white);
     border: none;
-    box-shadow: 0 4px 15px rgba(198, 168, 124, 0.4);
+    box-shadow: 0 4px 15px rgba(231,174,67, 0.4);
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -575,7 +578,7 @@ table.premium-table { width: 100%; min-width: 850px; border-collapse: collapse; 
 @media (max-width: 768px) { .portfolio-grid { grid-template-columns: 1fr; } }
 @media (max-width: 768px) { .contact-links-inline { flex-direction: column; gap: 10px; align-items: center; } }
 
-.node-bottom-contact { grid-column: 1 / span 3; grid-row: 2; text-align: center; border-top: 1px solid rgba(198,168,124,0.15); padding-top: 40px; margin-top: 20px; }
+.node-bottom-contact { grid-column: 1 / span 3; grid-row: 2; text-align: center; border-top: 1px solid rgba(231,174,67,0.15); padding-top: 40px; margin-top: 20px; }
 .contact-links-inline { display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; margin-bottom: 20px; }
 .contact-links-inline a { display: inline-block; margin: 0; color: #aaa; transition: color 0.3s; }
 .contact-links-inline a:hover { color: var(--white); }
