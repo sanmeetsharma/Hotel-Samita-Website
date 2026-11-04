@@ -42,8 +42,8 @@
             hero.style.setProperty('--hero-shift', motion ? `${Math.min(scrollY * .12, 85).toFixed(2)}px` : '0px');
             dirty = false;
         }
-        if (motion && fine.matches) {
-            const follow = 1 - Math.exp(-32 * dt);
+        if (fine.matches) {
+            const follow = motion ? 1 - Math.exp(-32 * dt) : 1;
             cursorX += (pointerX - cursorX) * follow;
             cursorY += (pointerY - cursorY) * follow;
             cursor.style.transform = `translate3d(${cursorX}px,${cursorY}px,0)`;
@@ -57,7 +57,7 @@
     if ('ResizeObserver' in window) new ResizeObserver(measure).observe(document.body);
     document.addEventListener('pointermove', event => {
         if (document.body.classList.contains('is-viewing-photos')) { hideCursor(); return; }
-        if (!motion || !fine.matches || event.pointerType === 'touch') return;
+        if (!fine.matches || event.pointerType === 'touch') return;
         pointerX = event.clientX; pointerY = event.clientY;
         if (!document.body.classList.contains('has-motion-cursor')) { cursorX=pointerX; cursorY=pointerY; document.body.classList.add('has-motion-cursor'); }
         const label = event.target.closest('a,button')?.dataset.cursor;

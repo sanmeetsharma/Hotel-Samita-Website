@@ -50,8 +50,9 @@
             }
             again=(hovering&&!showNight)||Math.abs(size-radius)>.1||speed>.1;
         }
-        if (fine.matches && motionEnabled) {
-            cx+=(px-cx)*(1-Math.exp(-32*dt)); cy+=(py-cy)*(1-Math.exp(-32*dt));
+        if (fine.matches) {
+            const cursorFollow=motionEnabled?1-Math.exp(-32*dt):1;
+            cx+=(px-cx)*cursorFollow; cy+=(py-cy)*cursorFollow;
             cursor.style.transform=`translate3d(${cx}px,${cy}px,0)`;
             again ||= Math.abs(px-cx)+Math.abs(py-cy)>.2;
         }
@@ -89,7 +90,7 @@
     dayButton.addEventListener('click',()=>setScene(false));
     nightButton.addEventListener('click',()=>setScene(true));
     document.addEventListener('pointermove',event=>{
-        if (event.pointerType==='touch'||!fine.matches||!motionEnabled) return;
+        if (event.pointerType==='touch'||!fine.matches) return;
         px=event.clientX;py=event.clientY;
         if (!document.body.classList.contains('has-motion-cursor')) {cx=px;cy=py;document.body.classList.add('has-motion-cursor');}
         const label=event.target.closest('a,button')?.dataset.cursor;

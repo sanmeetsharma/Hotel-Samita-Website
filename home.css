@@ -306,15 +306,11 @@ html.motion-disabled .samita-home { scroll-behavior: auto; }
 html.motion-disabled .samita-home *, html.motion-disabled .samita-home *::before, html.motion-disabled .samita-home *::after { animation: none !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
 html.motion-disabled [data-reveal] { opacity: 1; transform: none; }
 html.motion-disabled .stay-card[data-reveal] .stay-photo { clip-path: none; }
-html.motion-disabled .motion-cursor { display: none !important; }
-html.motion-disabled .samita-home.has-motion-cursor, html.motion-disabled .samita-home.has-motion-cursor * { cursor: auto !important; }
 @media (prefers-reduced-motion: reduce) {
     html:not(.motion-opt-in) .samita-home { scroll-behavior: auto; }
     html:not(.motion-opt-in) .samita-home *, html:not(.motion-opt-in) .samita-home *::before, html:not(.motion-opt-in) .samita-home *::after { animation: none !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
     html:not(.motion-opt-in) .motion-ready [data-reveal] { opacity: 1; transform: none; }
     html:not(.motion-opt-in) .motion-ready .stay-card[data-reveal] .stay-photo { clip-path: none; }
-    html:not(.motion-opt-in) .motion-cursor { display: none !important; }
-    html:not(.motion-opt-in) .samita-home.has-motion-cursor, html:not(.motion-opt-in) .samita-home.has-motion-cursor * { cursor: auto !important; }
 }
 
 /* Variable font weights breathe slowly without moving the surrounding columns. */
