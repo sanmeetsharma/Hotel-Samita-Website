@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-intro="welcome">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="motion-preference.js"></script>
     <meta name="theme-color" content="#002667">
     <meta name="description" content="Stay in the mountains with The Samita. Explore our three hotels in Manali, find your room, and plan a little time in Himachal Pradesh.">
     <title>The Samita | Mountain Hotels in Manali</title>
@@ -14,6 +15,7 @@
     <link rel="preload" as="image" href="Background_nighttime.png">
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="home.css">
+    <link rel="stylesheet" href="intro.css">
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-04P761HMCG"></script>
     <script>
         window.dataLayer=window.dataLayer||[];
@@ -21,12 +23,17 @@
         gtag('js',new Date());
         gtag('config','G-04P761HMCG');
     </script>
+    <script src="intro.js" defer></script>
     <script src="script.js" defer></script>
     <script src="hero-renderer.js" defer></script>
     <script src="navigation.js" defer></script>
     <script src="home.js" defer></script>
 </head>
 <body class="samita-home">
+    <div id="intro-splash" role="dialog" aria-modal="true" aria-label="Welcome to The Samita">
+        <button class="intro-skip" type="button">Skip intro ↗</button>
+        <div class="splash-content"><div class="intro-welcome">WELCOME TO</div><div class="intro-brand-wrapper"><div class="intro-brand">The Samita</div><div class="intro-sub-brand">Group of Hotels</div><div class="sparkles-container" aria-hidden="true"><div class="sparkle s1">✦</div><div class="sparkle s2">✦</div><div class="sparkle s3">✦</div><div class="sparkle s4">✦</div><div class="sparkle s5">✦</div></div></div></div>
+    </div>
     <a href="#main" class="skip-link">Skip to content</a>
     <div class="scroll-progress" aria-hidden="true"></div>
     <div class="motion-cursor" aria-hidden="true"><span></span></div>
@@ -60,7 +67,7 @@
         <div class="menu-contact"><a href="tel:+919459900045">+91 94599 00045</a><a href="mailto:reservations@thesamita.com">reservations@thesamita.com</a></div>
     </div>
 
-    <main id="main">
+    <main id="main" tabindex="-1">
         <header class="mountain-hero" id="home-hero" aria-labelledby="hero-title">
             <div class="hero-photograph hero-day" aria-hidden="true"></div>
             <div class="hero-photograph hero-night" aria-hidden="true"></div>

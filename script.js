@@ -1,15 +1,20 @@
 (() => {
     'use strict';
     function init() {
-        const reduced=matchMedia('(prefers-reduced-motion: reduce)');
-        const motionAllowed=()=>{try{const value=localStorage.getItem('samita-motion');if(value)return value==='on';}catch{/* Use system settings. */}return !reduced.matches;};
+        const motionAllowed=()=>window.SamitaMotion?.enabled() ?? true;
         document.documentElement.classList.toggle('motion-opt-in',motionAllowed());
         document.documentElement.classList.toggle('motion-disabled',!motionAllowed());
         const behavior=()=>motionAllowed()?'smooth':'instant';
         const overlay=document.getElementById('samita-wipe-transition');
         let navigating=false;
         function clearTransition(){navigating=false;overlay?.classList.remove('active','wipe-in','wipe-out');document.body.classList.remove('is-leaving');}
-        if(overlay){if(!motionAllowed())clearTransition();else setTimeout(clearTransition,750);}
+        if(overlay){
+            if(!motionAllowed())clearTransition();
+            else {
+                overlay.addEventListener('animationend',event=>{if(event.target===overlay&&overlay.classList.contains('wipe-out'))clearTransition();});
+                setTimeout(()=>{if(!navigating)clearTransition();},1600);
+            }
+        }
         window.addEventListener('pageshow',event=>{if(event.persisted)clearTransition();});
         document.addEventListener('click',event=>{
             const link=event.target.closest('a[href]');
@@ -29,7 +34,7 @@
             overlay.style.setProperty('--transition-x',`${event.clientX||innerWidth/2}px`);
             overlay.style.setProperty('--transition-y',`${event.clientY||innerHeight/2}px`);
             overlay.classList.remove('wipe-out');overlay.classList.add('active','wipe-in');document.body.classList.add('is-leaving');
-            const destination=link.href;setTimeout(()=>location.assign(destination),550);
+            const destination=link.href;setTimeout(()=>location.assign(destination),800);
         });
         document.querySelectorAll('.stagger-text').forEach(element=>{
             if(element.classList.contains('stagger-initialized'))return;

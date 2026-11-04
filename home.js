@@ -2,10 +2,7 @@
     'use strict';
     const hero = document.querySelector('.mountain-hero');
     if (!hero) return;
-    const reduced = matchMedia('(prefers-reduced-motion: reduce)');
-    let preference;
-    try { preference=localStorage.getItem('samita-motion'); } catch { /* Use the system preference. */ }
-    let motionEnabled=preference ? preference==='on' : !reduced.matches;
+    let motionEnabled=window.SamitaMotion?.enabled() ?? true;
     const motionButton=document.getElementById('motion-toggle');
     const fine = matchMedia('(hover: hover) and (pointer: fine)');
     const night = document.querySelector('.hero-night');
@@ -135,17 +132,16 @@
     });
     function applyMotion(value,remember=false){
         motionEnabled=value;
+        window.SamitaMotion?.set(value,remember);
         document.documentElement.classList.toggle('motion-disabled',!value);
         document.documentElement.classList.toggle('motion-opt-in',value);
         motionButton.setAttribute('aria-pressed',String(value));
         motionButton.textContent=value?'Motion on':'Enable motion';
         motionButton.setAttribute('aria-label',value?'Turn off animations':'Turn on animations');
         document.body.classList.remove('has-motion-cursor');
-        if(remember){preference=value?'on':'off';try{localStorage.setItem('samita-motion',preference);}catch{/* The choice still applies for this visit. */}}
         setScene(showNight);
         document.dispatchEvent(new Event('samita-motion-change'));
     }
-    reduced.addEventListener('change',()=>{if(!preference)applyMotion(!reduced.matches);});
     motionButton.addEventListener('click',()=>applyMotion(!motionEnabled,true));
     fine.addEventListener('change',()=>{hovering=false;document.body.classList.remove('has-motion-cursor');setScene(showNight);});
     applyMotion(motionEnabled);

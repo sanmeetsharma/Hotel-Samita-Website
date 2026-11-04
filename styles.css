@@ -71,20 +71,19 @@ img { max-width: 100%; }
 /* =========================================
    ORGANIC PAGE TRANSITIONS
 ========================================= */
-.samita-wipe-transition {
-    position: fixed; inset: 0; z-index: 999999;
-    display: grid; place-items: center; background: #edf3fb;
-    visibility: hidden; pointer-events: none;
-    clip-path: circle(0 at var(--transition-x,50%) var(--transition-y,50%));
-    contain: paint;
-}
-.samita-wipe-transition.active { visibility: visible; }
-.samita-wipe-transition .logo-cluster { display: grid; place-items: center; }
-.samita-wipe-transition .wipe-logo { width: 130px; height: 130px; object-fit: cover; border-radius: 50%; mix-blend-mode: multiply; }
-.samita-wipe-transition.wipe-in { pointer-events: auto; animation: samita-depart .55s cubic-bezier(.65,0,.35,1) both; }
-.samita-wipe-transition.wipe-out { animation: samita-arrive .7s cubic-bezier(.65,0,.35,1) both; }
-@keyframes samita-depart { from { clip-path: circle(0 at var(--transition-x,50%) var(--transition-y,50%)); } to { clip-path: circle(150vmax at var(--transition-x,50%) var(--transition-y,50%)); } }
-@keyframes samita-arrive { from { clip-path: ellipse(100% 140% at 50% 50%); } to { clip-path: ellipse(0% 0% at 50% 0%); visibility: hidden; } }
+.samita-wipe-transition { position: fixed; inset: 0; z-index: 999999; display: flex; align-items: center; justify-content: center; background: #fff; visibility: hidden; pointer-events: none; transform: translate3d(-100%,0,0); contain: paint; }
+.samita-wipe-transition.active { visibility: visible; transform: translate3d(0,0,0); }
+.samita-wipe-transition .logo-cluster { display: flex; align-items: center; justify-content: center; opacity: 0; transform: scale(.5); max-width: 90%; }
+.samita-wipe-transition .wipe-logo { height: 200px; width: auto; max-width: 70vw; object-fit: contain; }
+.samita-wipe-transition.wipe-in { pointer-events: auto; animation: sweepRightIn .8s cubic-bezier(.77,0,.175,1) both; }
+.samita-wipe-transition.wipe-in .logo-cluster { animation: sweepInScale .6s cubic-bezier(.175,.885,.32,1.275) .2s both; }
+.samita-wipe-transition.wipe-out { pointer-events: auto; animation: sweepLeftOut .8s cubic-bezier(.77,0,.175,1) .6s both; }
+.samita-wipe-transition.wipe-out .logo-cluster { opacity: 1; transform: scale(1.5); animation: sweepOutScale .6s cubic-bezier(.77,0,.175,1) .3s both; }
+@keyframes sweepRightIn { from { transform: translate3d(-100%,0,0); } to { transform: translate3d(0,0,0); } }
+@keyframes sweepLeftOut { from { transform: translate3d(0,0,0); } to { transform: translate3d(100%,0,0); } }
+@keyframes sweepInScale { from { opacity: 0; transform: scale(.5); } to { opacity: 1; transform: scale(1.5); } }
+@keyframes sweepOutScale { from { opacity: 1; transform: scale(1.5); } to { opacity: 0; transform: scale(5); } }
+@media (max-width:768px) { .samita-wipe-transition .wipe-logo { height: 80px; } }
 .samita-interactions, .samita-interactions * { cursor: auto !important; }
 .samita-interactions a, .samita-interactions button, .samita-interactions a *, .samita-interactions button * { cursor: pointer !important; }
 @media (prefers-reduced-motion: reduce) {

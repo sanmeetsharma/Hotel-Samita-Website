@@ -1,7 +1,6 @@
 (() => {
     'use strict';
-    const reduced=matchMedia('(prefers-reduced-motion: reduce)');
-    const motionAllowed=()=>{try{const value=localStorage.getItem('samita-motion');if(value)return value==='on';}catch{}return !reduced.matches;};
+    const motionAllowed=()=>window.SamitaMotion?.enabled() ?? true;
     const menu = document.getElementById('samita-menu');
     if (!menu) return;
     const toggle = document.getElementById('menu-toggle');

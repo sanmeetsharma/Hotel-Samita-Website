@@ -2,11 +2,8 @@
     'use strict';
     const hero = document.querySelector('.hotel-hero');
     if (!hero) return;
-    const reduced = matchMedia('(prefers-reduced-motion: reduce)');
     const fine = matchMedia('(hover: hover) and (pointer: fine)');
-    let preference;
-    try { preference = localStorage.getItem('samita-motion'); } catch { /* Follow the system. */ }
-    let motion = preference ? preference === 'on' : !reduced.matches;
+    let motion = window.SamitaMotion?.enabled() ?? true;
     const navigation = document.querySelector('.samita-nav');
     const progress = document.querySelector('.scroll-progress');
     const cursor = document.querySelector('.motion-cursor');
@@ -68,16 +65,15 @@
     document.addEventListener('pointerleave',hideCursor); window.addEventListener('blur',hideCursor);
     function applyMotion(value,remember=false) {
         motion=value; hideCursor();
+        window.SamitaMotion?.set(value,remember);
         document.documentElement.classList.toggle('motion-disabled',!value);
         document.documentElement.classList.toggle('motion-opt-in',value);
         motionButton.textContent=value?'Motion on':'Enable motion';
         motionButton.setAttribute('aria-pressed',String(value));
         motionButton.setAttribute('aria-label',value?'Turn off animations':'Turn on animations');
-        if (remember) { preference=value?'on':'off'; try { localStorage.setItem('samita-motion',preference); } catch { /* The setting still applies to this page. */ } }
         syncVideo(); dirty=true; requestFrame(); document.dispatchEvent(new Event('samita-motion-change'));
     }
     motionButton.addEventListener('click',()=>applyMotion(!motion,true));
-    reduced.addEventListener('change',()=>{if(!preference)applyMotion(!reduced.matches);});
     fine.addEventListener('change',hideCursor);
     if ('IntersectionObserver' in window) {
         new IntersectionObserver(entries=>{heroVisible=entries[0].isIntersecting;syncVideo();}).observe(hero);
