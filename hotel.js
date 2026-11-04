@@ -13,12 +13,20 @@
     const cursorLabel = cursor.querySelector('span');
     const motionButton = document.getElementById('motion-toggle');
     const heroVideo = hero.querySelector('video');
+    const videoButton = document.getElementById('hotel-video-toggle');
     let heroVisible = true;
+    let videoPaused = false;
     function syncVideo() {
         if (!heroVideo) return;
-        if (motion && heroVisible && !document.hidden) heroVideo.play().catch(()=>{});
+        if (!videoPaused && heroVisible && !document.hidden) heroVideo.play().catch(()=>{});
         else heroVideo.pause();
     }
+    videoButton?.addEventListener('click',()=>{
+        videoPaused=!videoPaused;
+        videoButton.textContent=videoPaused?'Play video':'Pause video';
+        videoButton.setAttribute('aria-label',videoPaused?'Play background video':'Pause background video');
+        syncVideo();
+    });
     let frame = 0, previous = 0, dirty = true;
     let pointerX = -100, pointerY = -100, cursorX = -100, cursorY = -100;
     let pageHeight = 1, heroHeight = hero.offsetHeight;

@@ -21,6 +21,7 @@
 .hotel-button.secondary:hover { background: rgba(255,255,255,.12); }
 .hotel-hero-note { position: absolute; top: 145px; right: clamp(22px,5.5vw,100px); display: inline-flex; align-items: center; gap: 7px; border: 1px solid rgba(255,255,255,.55); border-radius: 30px; padding: 10px 16px; font-size: 10px; }
 .hotel-hero-footer { position: absolute; inset: auto 0 22px; display: flex; align-items: center; justify-content: space-between; font-size: 9px; letter-spacing: .08em; text-transform: uppercase; }
+.hotel-hero-controls { display: flex; align-items: center; gap: 20px; }
 .hotel-motion { color: inherit; background: transparent; border: 0; border-bottom: 1px solid currentColor; padding: 4px 0; font-size: 9px !important; letter-spacing: .07em; text-transform: uppercase; }
 .hotel-facts { display: grid; grid-template-columns: repeat(3,1fr); border-bottom: 1px solid var(--line); }
 .hotel-fact { padding: 32px 0; display: flex; flex-direction: column; gap: 6px; }
@@ -128,6 +129,7 @@
     .hotel-hero-actions { display: flex; max-width: none; gap: 9px; margin-top: 25px; }
     .hotel-hero-actions .hotel-button { width: auto; min-height: 43px; padding: 12px 16px; gap: 22px; font-size: 10px; }
     .hotel-hero-footer { font-size: 8px; }
+    .hotel-hero-controls { gap: 12px; }
     .hotel-fact { padding-block: 22px; }
     .hotel-fact + .hotel-fact { padding-left: 15px; }
     .hotel-fact small { font-size: 7px; letter-spacing: .09em; }
