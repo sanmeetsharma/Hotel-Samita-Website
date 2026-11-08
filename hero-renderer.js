@@ -112,7 +112,7 @@
             onFallback?.();
         });
 
-        Promise.all([image('Background_daylight.png'), image('Background_nighttime.png')])
+        Promise.all([image('media/home-day.webp'), image('media/home-night.webp')])
             .then(loaded => {
                 images = loaded;
                 const program = gl.createProgram();

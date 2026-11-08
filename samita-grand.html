@@ -7,12 +7,12 @@
     <meta name="theme-color" content="#002667">
     <meta name="description" content="Wood-finished rooms, mountain views, and a place to come back to after a day in Manali. Explore The Samita Grand in Manali, see photos, and get in touch to plan your stay.">
     <title>The Samita Grand | A Mountain Stay in Manali</title>
-    <link rel="icon" type="image/jpeg" href="new-square-logo.jpg">
+    <link rel="icon" type="image/webp" href="media/square-logo.webp">
     <link rel="canonical" href="https://www.thesamita.com/samita-grand.html">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
-    <link rel="preload" as="image" href="samita-grand-home.png" fetchpriority="high">
+    <link rel="preload" as="image" href="media/grand-exterior.webp" fetchpriority="high">
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="home.css">
     <link rel="stylesheet" href="hotel.css">
@@ -34,9 +34,9 @@
     <a href="#main" class="skip-link">Skip to content</a>
     <div class="scroll-progress" aria-hidden="true"></div>
     <div class="motion-cursor" aria-hidden="true"><span></span></div>
-    <div id="samita-wipe-transition" class="samita-wipe-transition active wipe-out" aria-hidden="true"><div class="logo-cluster"><img class="wipe-logo" src="transition-logo.jpg" alt="" width="180" height="180"></div></div>
+    <div id="samita-wipe-transition" class="samita-wipe-transition active wipe-out" aria-hidden="true"><div class="logo-cluster"><img class="wipe-logo" src="media/transition-logo.webp" alt="" width="180" height="180"></div></div>
     <nav class="samita-nav" aria-label="Main navigation">
-        <a class="samita-brand" href="index.html" aria-label="The Samita home"><img src="new-square-logo.jpg" alt="" width="39" height="39"><span class="brand-name">The Samita<small>Group of Hotels</small></span></a>
+        <a class="samita-brand" href="index.html" aria-label="The Samita home"><img src="media/square-logo.webp" alt="" width="39" height="39"><span class="brand-name">The Samita<small>Group of Hotels</small></span></a>
         <span class="nav-location eyebrow">The Samita Grand<br>Manali, Himachal Pradesh</span>
         <div class="desktop-links"><a href="index.html#properties">Our hotels</a><a href="#facilities">Facilities</a><a href="#find-us">Plan your stay ↗</a></div>
         <button id="menu-toggle" class="menu-toggle" type="button" aria-label="Open navigation menu" aria-controls="samita-menu" aria-expanded="false"><span></span><span></span></button>
@@ -56,7 +56,7 @@
     </div>
     <main id="main">
         <header class="hotel-hero" aria-labelledby="hotel-title">
-            <div class="hotel-hero-photo"><video autoplay muted loop playsinline preload="metadata" poster="samita-grand-home.png" aria-label="A look around The Samita Grand"><source src="background.mp4" type="video/mp4"></video></div>
+            <div class="hotel-hero-photo"><video autoplay muted loop playsinline preload="metadata" poster="media/grand-exterior.webp" aria-label="A look around The Samita Grand"><source src="media/grand-hero.mp4" type="video/mp4"></video></div>
             <span class="hotel-hero-note"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></svg> Manali, Himachal Pradesh</span>
             <div class="hotel-hero-content section-shell">
                 <a class="hotel-breadcrumb" href="index.html#properties"><span aria-hidden="true">←</span>All our mountain stays</a>
@@ -106,16 +106,22 @@
             </section>
             <section class="facility-group" id="dining" aria-labelledby="dining-title">
                 <div class="facility-group-heading" data-reveal><h3 id="dining-title">Where to eat</h3><span class="eyebrow">At the hotel / 03</span></div>
-                <article class="facility-feature" data-reveal>
-                    <button class="facility-media" type="button" data-gallery-photo="property-media/buffet.webp" data-caption="Buffet restaurant at The Samita Grand" data-cursor="VIEW" aria-label="View photo: Buffet restaurant at The Samita Grand"><img src="property-media/buffet.webp" alt="Tables and buffet stations in the restaurant at The Samita Grand" loading="lazy" decoding="async"><span class="facility-media-label" aria-hidden="true">View photo ↗</span></button>
-                    <div class="facility-copy"><h4>Buffet restaurant</h4><p>Sit down for a meal in the hotel restaurant. Ask the team about buffet timings during your stay.</p></div>
-                </article>
+                <div class="facility-grid facility-grid--two">
+                    <article class="facility-card" data-reveal>
+                        <button class="facility-media" type="button" data-gallery-photo="property-media/buffet.webp" data-caption="Buffet restaurant at The Samita Grand" data-cursor="VIEW" aria-label="View photo: Buffet restaurant at The Samita Grand"><img src="property-media/buffet.webp" alt="Tables and buffet stations in the restaurant at The Samita Grand" loading="lazy" decoding="async"><span class="facility-media-label" aria-hidden="true">View photo ↗</span></button>
+                        <div class="facility-copy"><h4>Buffet restaurant</h4><p>Sit down for a meal in the hotel restaurant. Ask the team about buffet timings during your stay.</p></div>
+                    </article>
+                    <article class="facility-card" data-reveal>
+                        <button class="facility-media" type="button" data-hotel-film="media/candlelight-dinner.mp4" data-film-caption="Candlelight dinner at The Samita Grand" data-cursor="PLAY" aria-label="Play the candlelight dinner video"><img src="media/candlelight-dinner.webp" alt="A table set for dinner with lit candles" width="720" height="396" loading="lazy" decoding="async"><span class="facility-media-label" aria-hidden="true">Play video ▷</span></button>
+                        <div class="facility-copy"><h4>Candlelight dinner</h4><p>Planning a special evening? Ask the hotel about arranging a candlelight dinner during your stay.</p></div>
+                    </article>
+                </div>
             </section>
             <section class="facility-group" id="gatherings" aria-labelledby="gatherings-title">
                 <div class="facility-group-heading" data-reveal><h3 id="gatherings-title">Celebrations &amp; practicalities</h3><span class="eyebrow">At the hotel / 04</span></div>
                 <div class="facility-grid facility-grid--two">
                     <article class="facility-card" data-reveal>
-                        <div class="facility-media facility-media--art"><img src="property-media/discotheque.svg" alt="" loading="lazy" decoding="async"><span class="facility-media-label">Illustration</span></div>
+                        <button class="facility-media" type="button" data-hotel-film="media/discotheque.mp4" data-film-caption="Dancing at a Samita celebration" data-cursor="PLAY" aria-label="Play the discotheque video"><img src="media/discotheque.webp" alt="Guests dancing under coloured lights" width="720" height="404" loading="lazy" decoding="async"><span class="facility-media-label" aria-hidden="true">Play video ▷</span></button>
                         <div class="facility-copy"><h4>Discotheque</h4><p>Head indoors for music and dancing. Ask the hotel about opening times or access for your group.</p></div>
                     </article>
                     <article class="facility-card" data-reveal>
@@ -135,7 +141,7 @@
         </div></section>
         <section id="rooms" class="hotel-rooms" aria-labelledby="rooms-title"><div class="section-shell">
             <div class="hotel-section-heading" data-reveal><span class="eyebrow">03 / A good night in Manali</span><div><h2 class="hotel-heading" id="rooms-title">Find your<br><span class="serif">kind of room.</span></h2><p class="hotel-section-note">From a room for two to connected rooms for the family. Ask us about rates and availability for your dates.</p></div></div>
-            <div class="hotel-room-grid"><article class="hotel-room-card" data-reveal><button class="hotel-room-photo" type="button" data-modal="room-hill" data-cursor="VIEW" aria-label="View Hill View Suite details"><img src="grand-photo-07.jpg" alt="Hill View Suite at The Samita Grand" loading="lazy" width="900" height="600"></button><div class="hotel-room-copy"><div class="hotel-room-top"><h3>Hill View Suite</h3><span class="hotel-room-number">01</span></div><p>A comfortable room with views of the surrounding hills. A simple base for a few days in Manali.</p><button class="hotel-text-button" type="button" data-modal="room-hill">Room details<span aria-hidden="true">↗</span></button></div></article>
+            <div class="hotel-room-grid"><article class="hotel-room-card" data-reveal><button class="hotel-room-photo" type="button" data-modal="room-hill" data-cursor="VIEW" aria-label="View Hill View Suite details"><img src="media/grand-hill-suite.webp" alt="Hill View Suite at The Samita Grand" loading="lazy" width="900" height="600"></button><div class="hotel-room-copy"><div class="hotel-room-top"><h3>Hill View Suite</h3><span class="hotel-room-number">01</span></div><p>A comfortable room with views of the surrounding hills. A simple base for a few days in Manali.</p><button class="hotel-text-button" type="button" data-modal="room-hill">Room details<span aria-hidden="true">↗</span></button></div></article>
 <article class="hotel-room-card" data-reveal><button class="hotel-room-photo" type="button" data-modal="room-family" data-cursor="VIEW" aria-label="View Family Suite details"><img src="grand-photo-09.jpg" alt="Family Suite at The Samita Grand" loading="lazy" width="900" height="600"></button><div class="hotel-room-copy"><div class="hotel-room-top"><h3>Family Suite</h3><span class="hotel-room-number">02</span></div><p>Two connected rooms give families or friends space to stay together, with separate sleeping areas.</p><button class="hotel-text-button" type="button" data-modal="room-family">Room details<span aria-hidden="true">↗</span></button></div></article>
 <article class="hotel-room-card" data-reveal><button class="hotel-room-photo" type="button" data-modal="room-deluxe" data-cursor="VIEW" aria-label="View Deluxe Suite details"><img src="grand-photo-11.jpg" alt="Deluxe Suite at The Samita Grand" loading="lazy" width="900" height="600"></button><div class="hotel-room-copy"><div class="hotel-room-top"><h3>Deluxe Suite</h3><span class="hotel-room-number">03</span></div><p>A private balcony, air conditioning, and a place to put your feet up after a day around town.</p><button class="hotel-text-button" type="button" data-modal="room-deluxe">Room details<span aria-hidden="true">↗</span></button></div></article>
 <article class="hotel-room-card" data-reveal><button class="hotel-room-photo" type="button" data-modal="room-premium" data-cursor="VIEW" aria-label="View Premium Suite details"><img src="grand-photo-13.jpg" alt="Premium Suite at The Samita Grand" loading="lazy" width="900" height="600"></button><div class="hotel-room-copy"><div class="hotel-room-top"><h3>Premium Suite</h3><span class="hotel-room-number">04</span></div><p>Wooden interiors and wide mountain views. A room for slow mornings and a little more time indoors.</p><button class="hotel-text-button" type="button" data-modal="room-premium">Room details<span aria-hidden="true">↗</span></button></div></article>
@@ -143,9 +149,9 @@
         </div></section>
         <section id="gallery" class="hotel-gallery" aria-labelledby="gallery-title"><div class="section-shell">
             <div class="hotel-section-heading" data-reveal><span class="eyebrow">04 / A little look around</span><h2 class="hotel-heading" id="gallery-title">Picture yourself<br><span class="serif">here.</span></h2></div>
-            <div class="hotel-gallery-grid"><button class="hotel-gallery-tile" type="button" data-gallery-photo="grand-photo-05.jpg" data-caption="A seat above the valley" data-cursor="VIEW" aria-label="View photo: A seat above the valley" data-reveal><img src="grand-photo-05.jpg" alt="Balcony seating overlooking Manali and the mountains" loading="lazy"><span class="hotel-gallery-caption">A seat above the valley<b aria-hidden="true">↗</b></span></button>
-<button class="hotel-gallery-tile" type="button" data-gallery-photo="samita-grand-home.png" data-caption="At the hotel" data-cursor="VIEW" aria-label="View photo: At the hotel" data-reveal><img src="samita-grand-home.png" alt="The exterior and garden at The Samita Grand" loading="lazy"><span class="hotel-gallery-caption">At the hotel<b aria-hidden="true">↗</b></span></button>
-<button class="hotel-gallery-tile" type="button" data-gallery-photo="grand-photo-03.jpg" data-caption="Warm wooden interiors" data-cursor="VIEW" aria-label="View photo: Warm wooden interiors" data-reveal><img src="grand-photo-03.jpg" alt="A suite with a wooden ceiling and large windows" loading="lazy"><span class="hotel-gallery-caption">Warm wooden interiors<b aria-hidden="true">↗</b></span></button>
+            <div class="hotel-gallery-grid"><button class="hotel-gallery-tile" type="button" data-gallery-photo="media/grand-balcony.webp" data-caption="A seat above the valley" data-cursor="VIEW" aria-label="View photo: A seat above the valley" data-reveal><img src="media/grand-balcony.webp" alt="Balcony seating overlooking Manali and the mountains" loading="lazy"><span class="hotel-gallery-caption">A seat above the valley<b aria-hidden="true">↗</b></span></button>
+<button class="hotel-gallery-tile" type="button" data-gallery-photo="media/grand-exterior.webp" data-caption="At the hotel" data-cursor="VIEW" aria-label="View photo: At the hotel" data-reveal><img src="media/grand-exterior.webp" alt="The exterior and garden at The Samita Grand" loading="lazy"><span class="hotel-gallery-caption">At the hotel<b aria-hidden="true">↗</b></span></button>
+<button class="hotel-gallery-tile" type="button" data-gallery-photo="media/grand-room.webp" data-caption="Warm wooden interiors" data-cursor="VIEW" aria-label="View photo: Warm wooden interiors" data-reveal><img src="media/grand-room.webp" alt="A suite with a wooden ceiling and large windows" loading="lazy"><span class="hotel-gallery-caption">Warm wooden interiors<b aria-hidden="true">↗</b></span></button>
 <button class="hotel-gallery-tile" type="button" data-gallery-photo="grand-photo-04.jpg" data-caption="Around the table" data-cursor="VIEW" aria-label="View photo: Around the table" data-reveal><img src="grand-photo-04.jpg" alt="The dining room at The Samita Grand" loading="lazy"><span class="hotel-gallery-caption">Around the table<b aria-hidden="true">↗</b></span></button>
 <button class="hotel-gallery-tile" type="button" data-gallery-photo="grand-photo-06.jpg" data-caption="Come on in" data-cursor="VIEW" aria-label="View photo: Come on in" data-reveal><img src="grand-photo-06.jpg" alt="The wood-finished reception area" loading="lazy"><span class="hotel-gallery-caption">Come on in<b aria-hidden="true">↗</b></span></button></div>
             <button class="hotel-text-button hotel-film-link" type="button" data-hotel-film="background.mp4">Watch the hotel film<span aria-hidden="true">▷</span></button>
@@ -163,7 +169,7 @@
         </div></section>
         <section class="hotel-more section-shell" aria-labelledby="more-title"><h2 id="more-title" class="eyebrow">More places to stay with The Samita</h2><div class="hotel-more-links"><a href="https://newsamita.com">The New Samita Grand<span aria-hidden="true">↗</span></a><a href="samita-inn-suites.html">The Samita Inn &amp; Suites<span aria-hidden="true">↗</span></a></div></section>
     </main>
-    <div id="room-hill" class="modal-overlay"><div class="modal-content"><button class="close-modal" type="button">×</button><img class="hotel-room-modal-image" src="grand-photo-07.jpg" alt="Hill View Suite at The Samita Grand" loading="lazy"><div class="hotel-room-modal-copy"><h2>Hill View Suite</h2><p>A comfortable room with views of the surrounding hills. A simple base for a few days in Manali.</p><a class="hotel-button" href="mailto:hotelsamitagrand@gmail.com?subject=A%20stay%20at%20The%20Samita%20Grand">Enquire about a stay<span aria-hidden="true">↗</span></a></div></div></div>
+    <div id="room-hill" class="modal-overlay"><div class="modal-content"><button class="close-modal" type="button">×</button><img class="hotel-room-modal-image" src="media/grand-hill-suite.webp" alt="Hill View Suite at The Samita Grand" loading="lazy"><div class="hotel-room-modal-copy"><h2>Hill View Suite</h2><p>A comfortable room with views of the surrounding hills. A simple base for a few days in Manali.</p><a class="hotel-button" href="mailto:hotelsamitagrand@gmail.com?subject=A%20stay%20at%20The%20Samita%20Grand">Enquire about a stay<span aria-hidden="true">↗</span></a></div></div></div>
 <div id="room-family" class="modal-overlay"><div class="modal-content"><button class="close-modal" type="button">×</button><img class="hotel-room-modal-image" src="grand-photo-09.jpg" alt="Family Suite at The Samita Grand" loading="lazy"><div class="hotel-room-modal-copy"><h2>Family Suite</h2><p>Two connected rooms give families or friends space to stay together, with separate sleeping areas.</p><a class="hotel-button" href="mailto:hotelsamitagrand@gmail.com?subject=A%20stay%20at%20The%20Samita%20Grand">Enquire about a stay<span aria-hidden="true">↗</span></a></div></div></div>
 <div id="room-deluxe" class="modal-overlay"><div class="modal-content"><button class="close-modal" type="button">×</button><img class="hotel-room-modal-image" src="grand-photo-11.jpg" alt="Deluxe Suite at The Samita Grand" loading="lazy"><div class="hotel-room-modal-copy"><h2>Deluxe Suite</h2><p>A private balcony, air conditioning, and a place to put your feet up after a day around town.</p><a class="hotel-button" href="mailto:hotelsamitagrand@gmail.com?subject=A%20stay%20at%20The%20Samita%20Grand">Enquire about a stay<span aria-hidden="true">↗</span></a></div></div></div>
 <div id="room-premium" class="modal-overlay"><div class="modal-content"><button class="close-modal" type="button">×</button><img class="hotel-room-modal-image" src="grand-photo-13.jpg" alt="Premium Suite at The Samita Grand" loading="lazy"><div class="hotel-room-modal-copy"><h2>Premium Suite</h2><p>Wooden interiors and wide mountain views. A room for slow mornings and a little more time indoors.</p><a class="hotel-button" href="mailto:hotelsamitagrand@gmail.com?subject=A%20stay%20at%20The%20Samita%20Grand">Enquire about a stay<span aria-hidden="true">↗</span></a></div></div></div>
@@ -181,7 +187,7 @@
 
             <div class="footer-center-node">
                 <div class="logo-wrapper-footer">
-                    <a href="index.html"><img src="footer%20logo.png?v=2" alt="The Samita Group" class="footer-logo"></a>
+                    <a href="index.html"><img src="media/footer-logo.webp" alt="The Samita Group" class="footer-logo"></a>
                 </div>
                 <p class="designer-tagline">Experience the height of hospitality.</p>
             </div>

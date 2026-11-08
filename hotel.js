@@ -79,7 +79,7 @@
         new IntersectionObserver(entries=>{heroVisible=entries[0].isIntersecting;syncVideo();}).observe(hero);
         const observer=new IntersectionObserver(entries=>{
             for(const entry of entries) if(entry.isIntersecting){entry.target.classList.add('is-visible');observer.unobserve(entry.target);}
-        },{threshold:.07});
+        },{rootMargin:'160px 0px',threshold:.07});
         document.querySelectorAll('[data-reveal]').forEach(element=>observer.observe(element));
         document.documentElement.classList.add('motion-ready');
     }
@@ -113,11 +113,15 @@
         lightbox.querySelector('.hotel-lightbox-close').focus();
     }
     items.forEach((item,index)=>item.addEventListener('click',()=>{showPhoto(index);openLightbox(item);}));
-    document.querySelector('[data-hotel-film]')?.addEventListener('click',event=>{
-        ++version; image.hidden=true; video.hidden=false; controls.hidden=true;
-        caption.textContent='A look around the hotel';
-        if(!video.src)video.src=event.currentTarget.dataset.hotelFilm;
-        openLightbox(event.currentTarget);
+    document.querySelectorAll('[data-hotel-film]').forEach(trigger=>{
+        trigger.addEventListener('click',()=>{
+            ++version; image.hidden=true; video.hidden=false; controls.hidden=true;
+            caption.textContent=trigger.dataset.filmCaption||'A look around the hotel';
+            if(video.getAttribute('src')!==trigger.dataset.hotelFilm)video.src=trigger.dataset.hotelFilm;
+            video.currentTime=0;
+            openLightbox(trigger);
+            video.play().catch(()=>{});
+        });
     });
     lightbox.querySelector('.hotel-lightbox-close').addEventListener('click',()=>lightbox.close());
     lightbox.querySelector('[data-photo-prev]').addEventListener('click',()=>showPhoto(active-1));

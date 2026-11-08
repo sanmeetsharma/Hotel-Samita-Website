@@ -62,8 +62,8 @@
 .mountain-hero { position: relative; isolation: isolate; min-height: 720px; height: 100svh; max-height: 1300px; overflow: hidden; color: var(--paper); background: #06316f; border-radius: 0 0 28px 28px; touch-action: pan-y pinch-zoom; }
 .hero-photograph { position: absolute; inset: 0; background-size: cover; background-position: center 58%; transform: scale(1.04); will-change: transform; }
 .hero-photograph::after { display: none; }
-.hero-day { background-image: url('Background_daylight.png'); }
-.hero-night { background-image: url('Background_nighttime.png'); z-index: 1; clip-path: circle(0 at 50% 50%); }
+.hero-day { background-image: url('media/home-day.webp'); }
+.hero-night { background-image: url('media/home-night.webp'); z-index: 1; clip-path: circle(0 at 50% 50%); }
 .hero-lighting { position: absolute; inset: 0; z-index: 2; pointer-events: none; background: linear-gradient(180deg,rgba(0,23,68,.5),rgba(0,23,68,.04) 40%,rgba(0,23,68,.62)); }
 .hero-canvas { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; visibility: hidden; pointer-events: none; }
 .gpu-active .hero-canvas { visibility: visible; }

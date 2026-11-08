@@ -127,7 +127,7 @@
     if ('IntersectionObserver' in window) {
         const observer=new IntersectionObserver(entries=>{
             for (const entry of entries) if (entry.isIntersecting) {entry.target.classList.add('is-visible');observer.unobserve(entry.target);}
-        },{threshold:.08});
+        },{rootMargin:'160px 0px',threshold:.08});
         reveals.forEach(element=>observer.observe(element));document.documentElement.classList.add('motion-ready');
     }
     if ('IntersectionObserver' in window) {
