@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#082650">
+    <meta name="description" content="Send The Samita a booking request for your stay in Manali.">
+    <title>Booking Request | The Samita</title>
+    <link rel="icon" type="image/webp" href="/media/square-logo.webp">
+    <link rel="stylesheet" href="/booking.css">
+    <script src="/booking.js" defer></script>
+</head>
+<body>
+    <header class="booking-nav">
+        <a class="booking-brand" href="/">
+            <img src="/media/square-logo.webp" width="38" height="38" alt="">
+            <span>The Samita</span>
+        </a>
+        <a class="booking-back" href="/"><span aria-hidden="true">←</span> Back to site</a>
+    </header>
+    <main class="booking-layout">
+        <div class="booking-intro">
+            <p class="booking-kicker">Booking request · Manali</p>
+            <h1>Request <em>a stay.</em></h1>
+            <p>Tell us when you’d like to visit and who’s coming. We’ll prepare an email you can send to ask about availability and rates.</p>
+        </div>
+        <form id="booking-form" class="booking-card" method="post" data-hotel="any">
+            <fieldset id="booking-fields" class="booking-fields" disabled>
+                <div class="booking-field">
+                    <label for="booking-hotel">Property</label>
+                    <select id="booking-hotel" name="hotel" aria-describedby="booking-hotel-note">
+                        <option value="any">Help me choose a property</option>
+                        <option value="grand">The Samita Grand</option>
+                        <option value="inn">The Samita Inn &amp; Suites</option>
+                        <option value="new-grand">The New Samita Grand</option>
+                    </select>
+                    <p id="booking-hotel-note" class="booking-note">Selecting The Samita Inn &amp; Suites opens its phone booking page.</p>
+                </div>
+                <fieldset class="booking-group">
+                    <legend>Dates</legend>
+                    <div class="booking-grid booking-grid--dates">
+                        <div class="booking-field">
+                            <label for="booking-check-in">Check-in</label>
+                            <input id="booking-check-in" name="checkIn" type="date" required>
+                        </div>
+                        <div class="booking-field">
+                            <label for="booking-check-out">Check-out</label>
+                            <input id="booking-check-out" name="checkOut" type="date" required>
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset class="booking-group">
+                    <legend>Rooms and guests</legend>
+                    <div class="booking-grid booking-grid--counts">
+                        <div class="booking-field">
+                            <label for="booking-rooms">Rooms</label>
+                            <input id="booking-rooms" name="rooms" type="number" inputmode="numeric" min="1" step="1" value="1" required>
+                        </div>
+                        <div class="booking-field">
+                            <label for="booking-adults">Adults</label>
+                            <input id="booking-adults" name="adults" type="number" inputmode="numeric" min="1" step="1" value="1" required>
+                        </div>
+                        <div class="booking-field">
+                            <label for="booking-children">Children <small>(12 and under)</small></label>
+                            <input id="booking-children" name="children" type="number" inputmode="numeric" min="0" step="1" value="0" required>
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset class="booking-group">
+                    <legend>Your details</legend>
+                    <div class="booking-grid booking-grid--contact">
+                        <div class="booking-field">
+                            <label for="booking-name">Full name</label>
+                            <input id="booking-name" name="guestName" type="text" autocomplete="name" maxlength="100" required>
+                        </div>
+                        <div class="booking-field">
+                            <label for="booking-phone">Contact number</label>
+                            <input id="booking-phone" name="contactNumber" type="tel" autocomplete="tel" maxlength="35" required>
+                        </div>
+                    </div>
+                </fieldset>
+                <button class="booking-submit" type="submit">Open booking email <span aria-hidden="true">↗</span></button>
+                <p class="booking-note">Your email app will open with your details filled in. Review the draft and send it when you’re ready.</p>
+            </fieldset>
+            <noscript><p>Enable JavaScript to prepare your email, or <a href="tel:+919459900045">call +91 94599 00045</a> to ask about a stay.</p></noscript>
+            <div id="booking-draft" class="booking-draft" hidden>
+                <p role="status">Your booking email is ready. If your email app didn’t open, you can open the draft again or copy the details.</p>
+                <a id="booking-draft-link">Open email draft ↗</a>
+                <details>
+                    <summary>View details to copy</summary>
+                    <textarea id="booking-draft-text" aria-label="Prepared booking request" rows="8" readonly></textarea>
+                </details>
+            </div>
+        </form>
+    </main>
+</body>
+</html>
